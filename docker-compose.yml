@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  strategic-plan-express:
+    build: .
+    platform: linux/x86_64/v8
+    image: libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express
+    container_name: strategic-plan-express
+    ports:
+      - "8020:3000"
+    env_file: .env
+    volumes:
+      - ./app/:/usr/src/app/
+    networks:
+      - db_network
+    command: npm run dev
+    restart: always
+
+  db:
+    image: postgres:14.2
+    container_name: db
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db_autoimport:/docker-entrypoint-initdb.d/
+    networks:
+      - db_network
+    ports:
+      - 3222:5432
+    restart: always
+
+volumes:
+  postgres_data:
+
+networks:
+  db_network:
+    driver: bridge

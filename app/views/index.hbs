@@ -1,2 +1,104 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" href="/">
+        <span class="fs-2">Randall Library Strategic Plan Tracking</span>
+    </a>
+    <div class="d-flex align-items-center mb-3 mb-md-0 justify-content-end">
+        <a class="btn btn-clear btn-outline-dark" role="button" href="/table">Export Data as CSV</a>
+    </div>
+</header>
+
+
+
+<div class="container-flex">
+    <div class="row justify-content-md-center">
+        <div class="col col-xxl-9 col-xl-8 col-lg-8 col-md-12 col-12 d-none d-sm-block">
+            <div id="myPlot" style="width:100%"></div>
+        </div>
+        <div class="col col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-12">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Status</label>
+                    <select class="form-select" multiple aria-label="status select" id="status">
+                        <option value="1">In Process</option>
+                        <option value="2">Not Started</option>
+                        <option value="3">On Hold</option>
+                        <option value="4">Complete</option>
+                    </select>
+                    <div id="emailHelp" class="form-text">You may select more than one in each box.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Target Year</label>
+                    <select class="form-select" multiple size="3" aria-label="status select" id="year">
+                        <option value="1">2017 - 2018</option>
+                        <option value="2">2018 - 2019</option>
+                        <option value="3">2019 - 2020</option>
+                        <option value="4">2020 - 2021</option>
+                        <option value="5">2021 - 2022</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Username</label>
+                    <select class="form-select" multiple size="3" aria-label="status select" id="user">
+                        <option value="1">asdf</option>
+                        <option value="2">qwer</option>
+                        <option value="3">zxcv</option>
+                        <option value="4">sdfg</option>
+                        <option value="5">fghj</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+</div>
+
+        <div class="col">
+            <h1>{{title}}</h1>
+            <p>Welcome to {{title}}</p>
+        </div>
+
+
+
+<script>
+var xArray = [55, 49, 44, 24, 15, 90, 95];
+var yArray = [
+    "1: Supporting the Academy",
+    "2: Learning Spaces",
+    "3: Connections and Contributions",
+    "4: Strategic Alliances, Partnerships, and Collaboration",
+    "5: Information Literacy and Critical Thinking",
+    "6: Positive Organization Culture",
+    "7: Strategic Assessment and Measuring Our Impact"
+ ];
+var yLabels = yArray.map(x => x + "  ");  
+
+var data = [{
+  x: xArray,
+  y: yLabels,
+  type: "bar",
+  orientation: "h",
+  marker: {color:"#cce0e0"}
+}];
+
+var layout = {
+    // title: "World Wide Wine Production",
+    showlegend: false,
+    yaxis: {
+        automargin: true
+    },
+    margin: {
+        l: 1,
+        r: 1,
+        t: 1,
+        b: 1
+    }
+};
+
+var options = {
+    displayModeBar: false,
+    responsive: true,
+    staticPlot: true
+}
+
+Plotly.newPlot("myPlot", data, layout, options);
+</script>

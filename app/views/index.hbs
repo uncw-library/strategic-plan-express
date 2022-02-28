@@ -5,7 +5,7 @@
     </a>
     <div class="d-flex align-items-center mb-3 mb-md-0 justify-content-end">
         <a class="btn btn-clear btn-outline-dark" role="button" href="/table">Export Data as CSV</a>
-    </div>ß
+    </div>
 </header>
 {{!-- end Page header --}}
 
@@ -180,12 +180,35 @@
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <div>Status: In Process</div>
-                            <div>Target Academic Year: 2021 - 2022</div>
-                            <div>Leads: kittingera</div>
-                            <div>Members: None at this time</div>
-                            <div class="container-fluid shadow p-3 mb-5 bg-body rounded">
-                                <p>Taskstream Assessment Measures:</p>
+                            <nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#scrollspyHeading1">Summary</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#scrollspyHeading2">Measures</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#scrollspyHeading3">Instructions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#scrollspyHeading4">Notes</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            {{!-- Single Objective summary --}}
+                            <h4 id="scrollspyHeading1">Summary</h4>
+                            <div class="container-fluid shadow p-3 mb-5 bg-body rounded"
+                                style="position: relative; height:125px; overflow-y:scroll; tabindex:0">
+                                <div><b>Status: </b>In Process</div>
+                                <div><b>Target Academic Year: </b> 2021 - 2022</div>
+                                <div><b>Leads: </b>kittingera</div>
+                                <div><b>Members: </b>None at this time</div>
+                            </div>
+                            {{!-- Single Objective measures --}}
+                            <h4 id="scrollspyHeading2">Measures</h4>
+                            <div class="container-fluid shadow p-3 mb-5 bg-body rounded"
+                                style="position: relative; height:400px; overflow-y:scroll; tabindex:0">
                                 <div>
                                     <p class="lead">1. What data will be collected? Example: Environmental scan of
                                         peer and aspirant academic libraries; Research data management survey to
@@ -209,55 +232,81 @@
                                         the document along with link(s) to your documents here:</p>
                                     <br>
                                 </div>
-                                <div>
-                                    Taskstream Assessment Findings: (Enter at end of spring semester)
-                                    1. Summary of Findings:
-
-                                    Summarize the findings of your assessment (“We found that 90% of students
-                                    surveyed would prefer …”)
-                                    Put data in here (“There were 321 responses to the survey; 89% of respondents
-                                    were undergraduate students; 90% indicated ….)
-                                    Less narrative and more evidence is best
-
-                                    2. Analysis:
-
-                                    What does this mean for the library? What does the library need to do
-                                    differently in the future?
-
-                                    3. Comparison to Benchmark:
-
-                                    Not Met - Met - Exceeded
-                                    Please type “Not Met,” “Met,” or “Exceeded.”
-                                    If you have more than one benchmark and not all of them were met, you should
-                                    indicate “Not Met.”
-                                    “Exceeded” refers to completing all benchmarks and more that were not originally
-                                    created.
-
-                                    4. Substantiating Evidence:
-
-                                    List links to relevant reports, spreadsheets, images, webpages, etc.
-
-                                    5. Actions for Improvement:
-
-                                    What action needs to be taken? Only include if your objective NEEDs an action.
-                                    There is no need to write an action if there is nothing further to be done. If
-                                    there is an action that needs to be taken, be specific about the date it will be
-                                    completed.
-
-                                    6. Status Report:
-
-                                    Complete once you have addressed the “Actions for Improvement.” If you indicated
-                                    you are going to complete something in October, there should be an update here
-                                    by the end of October following the spring semester in which you entered the
-                                    information above.
-                                </div>
                             </div>
+                            {{!-- end Single Objective measures --}}
+                            {{!-- Single Objective measures instructions --}}
+                            <h4 id="scrollspyHeading3">Instructions</h4>
+                            <div class="container-fluid shadow p-3 mb-5 bg-body rounded"
+                                style="position: relative; height:400px; overflow-y:scroll; tabindex:0">
+                                <p>(Enter at end of spring semester)</p>
+                                <p class="lead">1. Summary of Findings:</p>
+                                <ul>
+                                    <li>Summarize the findings of your assessment (“We found that 90% of students
+                                        surveyed would prefer …”)</li>
+                                    <li>Put data in here (“There were 321 responses to the survey; 89% of respondents
+                                        were undergraduate students; 90% indicated ….)</li>
+                                    <li>Less narrative and more evidence is best</li>
+                                </ul>
+                                <p class="lead">2. Analysis:</p>
+                                <ul>
+                                    <li>What does this mean for the library? What does the library need to do
+                                        differently in the future?</li>
+                                </ul>
+                                <p class="lead">3. Comparison to Benchmark:</p>
+                                <ul>
+                                    <li>Not Met - Met - Exceeded</li>
+                                    <li>Please type “Not Met,” “Met,” or “Exceeded.”</li>
+                                    <li>If you have more than one benchmark and not all of them were met, you should
+                                        indicate “Not Met.”</li>
+                                    <li>“Exceeded” refers to completing all benchmarks and more that were not originally
+                                        created.</li>
+                                </ul>
+                                <p class="lead">4. Substantiating Evidence:</p>
+                                <ul>
+                                    <li>List links to relevant reports, spreadsheets, images, webpages, etc.</li>
+                                </ul>
+                                <p class="lead">5. Actions for Improvement:</p>
+                                <ul>
+                                    <li>What action needs to be taken? Only include if your objective NEEDs an action.
+                                        There is no need to write an action if there is nothing further to be done. If
+                                        there is an action that needs to be taken, be specific about the date it will be
+                                        completed.</li>
+                                </ul>
+                                <p class="lead">6. Status Report:</p>
+                                <ul>
+                                    <li>Complete once you have addressed the “Actions for Improvement.” If you indicated
+                                        you are going to complete something in October, there should be an update here
+                                        by the end of October following the spring semester in which you entered the
+                                        information above.</li>
+                                </ul>
+                            </div>
+                            {{!-- end Single Objective measures instructions --}}
+                            {{!-- Single Objective notes --}}
+                            <h4 id="scrollspyHeading4">Notes</h4>
+                            <div class="container-fluid shadow p-3 mb-5 bg-body rounded"
+                                style="position: relative; height:400px; overflow-y:scroll; tabindex:0">
+                                {{!-- Single Objective note --}}
+                                <p class="lead">holmanl:</p>
+                                <p>Presenting slate of Randall Faculty rep for FY2021 FS committees by May 23. Have
+                                    added representatives to Student Success Committee, Digital Measures Advisory Board,
+                                    and Research & Innovation Board</p>
+                                <p><i>May 6th 2020, 1:46 pm</i></p>
+                                {{!-- end Single Objective note --}}
+                                {{!-- Single Objective note --}}
+                                <p class="lead">holmanl:</p>
+                                <p>1/3/2018: Working with SLT and Faculty Welfare committee to review committees to
+                                    identify most appropriate committees to start requesting representation. Have
+                                    approached Shawn Bingham to request membership on Honors - he is supportive.</p>
+                                <p><i>January 3rd 2019, 1:08 pm</i></p>
+                                {{!-- end Single Objective note --}}
+                            </div>
+                            {{!-- end Single Objective notes --}}
                         </div>
                     </div>
                     {{!-- end Single Objective body --}}
                 </div>
                 {{!-- end Single Objective container --}}
-                {{!-- more Single Objective containers --}}
+                {{!-- more Single Objective containers ... --}}
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"

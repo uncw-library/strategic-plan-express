@@ -3,8 +3,8 @@ const { Pool } = require('pg')
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
-  database: 'strategic_plan_express',
-  port: 5432,
+  database: process.env.POSTGRES_DB,
+  port: process.env.POSTGRES_PORT,
   host: 'db',
   max: 1,
   idleTimeoutMillis: 30000,

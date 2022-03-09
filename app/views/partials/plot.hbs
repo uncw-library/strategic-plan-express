@@ -3,17 +3,14 @@
 </div>
 
 <script>
-    var xArray = [55, 49, 44, 24, 15, 90, 95];
-    var yArray = [
-        "1: Supporting the Academy",
-        "2: Learning Spaces",
-        "3: Connections and Contributions",
-        "4: Strategic Alliances, Partnerships, and Collaboration",
-        "5: Information Literacy and Critical Thinking",
-        "6: Positive Organization Culture",
-        "7: Strategic Assessment and Measuring Our Impact"
-    ];
-    var yLabels = yArray.map(x => x + "  ");
+
+    // var xArray = [55, 49, 44, 24, 15, 90, 95];
+    var plotData = {{{ plotData }}};
+
+    var yArray = plotData.map(item => `${item.rank}. ${item.title}`);
+    var yLabels = yArray.map(item => item + "  ");
+
+    var xArray = plotData.map(item => item.percentComplete)
 
     var data = [{
         x: xArray,

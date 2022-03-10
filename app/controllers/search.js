@@ -1,4 +1,13 @@
-const objectiveDetailsQueries = require('../queries/objectiveDetails.js')
+const objectivesQueries = require('../queries/objectives.js')
+
+// Example:
+//   fields = {
+//     status: ['asdf','qwer', etc],
+//     target_academic_year: ['1234 - 1234', '23452 - 1234', etc],
+//     leads: ['asdf', 'qwer', etc],
+//     project_members: ['asdf', 'qwer', etc],
+//     members_and_leads: ['asdf', 'qwer', etc]
+//   }
 
 async function getSearchOptions() {
   // gets each unique value in the db records for each 'fields' db column.
@@ -13,7 +22,7 @@ async function getSearchOptions() {
 
   // look up the db values for each of the fields, then add them to the fields[field] set
   for (field of Object.keys(fields)) {
-    const results = await objectiveDetailsQueries.getUniques(field)
+    const results = await objectivesQueries.getUniques(field)
     for (result of results.values()) {
       const items = result[field]
       if (!items) {

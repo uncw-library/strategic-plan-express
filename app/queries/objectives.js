@@ -2,7 +2,7 @@ const db = require('../db.js')
 
 async function getObjectiveByAA(actionArea) {
   const queryText = `
-      SELECT id, rank, description
+      SELECT *
       FROM objectives
       WHERE action_area = $1
     `
@@ -11,6 +11,17 @@ async function getObjectiveByAA(actionArea) {
   return items
 }
 
+async function getUniques(field) {
+  const queryText = `
+      SELECT DISTINCT ${field}
+      FROM objectives
+    `
+  const result = await db.query(queryText)
+  const items = result.rows
+  return items
+}
+
 module.exports = {
-  getObjectiveByAA
+  getObjectiveByAA,
+  getUniques
 }

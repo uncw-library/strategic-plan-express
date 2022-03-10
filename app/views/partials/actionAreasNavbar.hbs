@@ -8,27 +8,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav nav nav-tabs me-auto mb-2 mb-lg-0">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#actionArea1" role="tab" aria-controls="actionArea1" aria-selected="true">Supporting the Academy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="action-tab" data-bs-toggle="tab" data-bs-target="#actionArea2" role="tab" aria-controls="actionArea2" aria-selected="false">Learning Spaces</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Connections and Contributions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Strategic Alliances, Partnerships, and Collaboration</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Information Literacy and Critical Thinking</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Positive Organizational Culture</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Strategic Assessment and Measuring Our Impact</a>
-                </li>
+                {{#each actionAreas as |actionArea key|}}
+                    {{#if @first}}
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="actionArea-{{key}}" aria-selected="true">{{actionArea.title}}</a>
+                        </li>
+                    {{/if}}
+                    {{#unless @first}}
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="action-area-{{key}}" aria-selected="true">{{actionArea.title}}</a>
+                        </li>
+                    {{/unless}}
+                {{/each}}
             </ul>
         </div>
     </div>

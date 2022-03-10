@@ -3,15 +3,16 @@
 
 {{> header}}
 
-{{> vizAndSearchRow plotData=plotData searchOptions=searchOptions}}
+{{> vizAndSearchRow }}
 
 {{!-- Action Areas container --}}
 <div id="action-areas-container" class="container-fluid shadow p-3 mb-5 bg-body rounded">
+    {{!-- confusing names.  actionAreas is the data, actionArea is a template partial. --}}
     {{> actionAreasNavbar }}
     <div class="tab-content" id="myTabContent">
-        {{> actionArea}}
-        {{> actionArea}}
-        {{> actionArea}}
+        {{#each actionAreas as |actionAreaData|}}
+            {{> actionArea actionAreaData=actionAreaData }}
+        {{/each}}
     </div>
 </div>
 

@@ -1,4 +1,20 @@
-// const db = require('../db.js')
+const db = require('../db.js')
+
+async function getNoteByObjectiveID(objectiveID) {
+  const queryText = `
+      SELECT id, text, notes.user as user
+      FROM notes
+      WHERE objective_id = $1
+      ORDER BY id;
+  `
+  const result = await db.query(queryText, [objectiveID])
+  const items = result.rows
+  return items
+}
+
+module.exports = {
+    getNoteByObjectiveID
+}
 
 // async function getAllItems () {
 //   const queryText = `

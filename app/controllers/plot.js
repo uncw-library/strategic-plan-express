@@ -1,9 +1,9 @@
-const db = require('../db.js')
+const actionAreasQueries = require('../queries/actionAreas.js')
 
 async function getPlotData() {
-  const actionAreas = await getActionAreas()
-  const completeds = await getCompletedItemsByActionArea()
-  const totals = await getTotalsByActionArea()
+  const actionAreas = await actionAreasQueries.getActionAreas()
+  const completeds = await actionAreasQueries.getCompletedItemsByActionArea()
+  const totals = await actionAreasQueries.getTotalsByActionArea()
   const percents = computePercents(completeds, totals)
   const merged = actionAreas.map(i => {
     return {
@@ -29,44 +29,6 @@ function computePercents(completeds, totals) {
     }
   }
   return percents
-}
-
-async function getActionAreas () {
-  const queryText = `
-      SELECT id, rank, title
-      FROM action_areas
-      ORDER BY rank DESC;
-    `
-  const result = await db.query(queryText)
-  const items = result.rows
-  return items
-}
-
-async function getCompletedItemsByActionArea () {
-  const queryText = `
-    SELECT action_area, COUNT(status)
-    FROM objective_details
-    LEFT JOIN objectives
-      ON objective_details.objective_id = objectives.id 
-    WHERE LOWER(status) = 'complete'
-    GROUP BY action_area
-  `
-  const result = await db.query(queryText)
-  const items = result.rows
-  return items
-}
-
-async function getTotalsByActionArea () {
-  const queryText = `
-    SELECT action_area, COUNT(status)
-    FROM objective_details
-    LEFT JOIN objectives
-      ON objective_details.objective_id = objectives.id 
-    GROUP BY action_area
-  `
-  const result = await db.query(queryText)
-  const items = result.rows
-  return items  
 }
 
 module.exports = {

@@ -1,33 +1,38 @@
+{{!-- Example: 
+  searchOptions = {
+    status: ['asdf','qwer', etc],
+    target_academic_year: ['1234 - 1234', '23452 - 1234', etc],
+    leads: ['asdf', 'qwer', etc],
+    project_members: ['asdf', 'qwer', etc],
+    members_and_leads: ['asdf', 'qwer', etc]
+  }
+--}}
+
 <div class="col col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-12">
     <form>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Status</label>
+            <label for="status" class="form-label">Status</label>
             <select class="form-select" multiple aria-label="status select" id="status">
-                <option value="1">In Process</option>
-                <option value="2">Not Started</option>
-                <option value="3">On Hold</option>
-                <option value="4">Complete</option>
+                {{#each searchOptions.status as |item|}}
+                  <option value="{{item}}">{{item}}</option>
+                {{/each}}
             </select>
             <div id="emailHelp" class="form-text">You may select more than one in each box.</div>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Target Year</label>
+            <label for="target-year" class="form-label">Target Year</label>
             <select class="form-select" multiple size="3" aria-label="status select" id="year">
-                <option value="1">2017 - 2018</option>
-                <option value="2">2018 - 2019</option>
-                <option value="3">2019 - 2020</option>
-                <option value="4">2020 - 2021</option>
-                <option value="5">2021 - 2022</option>
+                {{#each searchOptions.target_academic_year as |item|}}
+                  <option value="{{item}}">{{item}}</option>
+                {{/each}}
             </select>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Username</label>
+            <label for="members" class="form-label">Members</label>
             <select class="form-select" multiple size="3" aria-label="status select" id="user">
-                <option value="1">asdf</option>
-                <option value="2">qwer</option>
-                <option value="3">zxcv</option>
-                <option value="4">sdfg</option>
-                <option value="5">fghj</option>
+                {{#each searchOptions.members_and_leads as |item|}}
+                  <option value="{{item}}">{{item}}</option>
+                {{/each}}
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

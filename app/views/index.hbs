@@ -1,8 +1,9 @@
 {{!-- the handlebars syntax for including a template partial is {{> filename }} --}}
+{{!-- we can pass a variable to a template partial by {{> filename variableName=variableName }}  --}}
 
-{{> header }}
+{{> header}}
 
-{{> vizAndSearchRow }}
+{{> vizAndSearchRow plotData=plotData searchOptions=searchOptions}}
 
 {{!-- Action Areas container --}}
 <div id="action-areas-container" class="container-fluid shadow p-3 mb-5 bg-body rounded">
@@ -15,3 +16,8 @@
 </div>
 
 {{> footer }}
+
+{{!-- {{#each plotData as |actionArea key|}}
+    {{actionArea.rank}}
+{{/each}}
+ --}}

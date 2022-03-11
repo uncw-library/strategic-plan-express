@@ -13,33 +13,35 @@ const goalsQueries = require('../queries/goals.js')
 //             {id: 1, description: 'asdf'},
 //             {id: 13, description: 'qwer'}, etc
 //         ],
-//         objectives: [
-//             action_area: 7,
-//             rank: 14,
-//             description: 'asdf',
-//             priority: 1,
-//             status: 'Not Started',
-//             objective_id: 108,
-//             target_academic_year: '2021 - 2022',
-//             leads: 'asdf',
-//             project_members: 'asdf,qwer',
-//             what_data_will_be_collected: 'asdf',
-//             how_often_assessed: 'asdf',
-//             acceptable_benchmark: 'asdf',
-//             assessment_documents: null,
-//             summary_of_findings: null,
-//             analysis: null,
-//             comparision_to_benchmark: null,
-//             substantiating_evidence: null,
-//             actions_for_improvement: null,
-//             status_report: null
-//             notes: [
-//                 id: 1,
-//                 text: 'asdf',
-//                 user: 'asdf'  
-//             ], etc.
-//         ]
-//     }
+//         objectives: {
+//             1: {
+//                 action_area: 7,
+//                 rank: 14,
+//                 description: 'asdf',
+//                 priority: 1,
+//                 status: 'Not Started',
+//                 objective_id: 108,
+//                 target_academic_year: '2021 - 2022',
+//                 leads: 'asdf',
+//                 project_members: 'asdf,qwer',
+//                 what_data_will_be_collected: 'asdf',
+//                 how_often_assessed: 'asdf',
+//                 acceptable_benchmark: 'asdf',
+//                 assessment_documents: null,
+//                 summary_of_findings: null,
+//                 analysis: null,
+//                 comparision_to_benchmark: null,
+//                 substantiating_evidence: null,
+//                 actions_for_improvement: null,
+//                 status_report: null
+//                 notes: [
+//                     id: 1,
+//                     text: 'asdf',
+//                     user: 'asdf'  
+//                 ], etc.
+//             }, etc
+//         }
+//     }, etc
 // }
 
 async function getActionAreas () {
@@ -54,21 +56,24 @@ async function getActionAreas () {
         const goals = await goalsQueries.getGoalsByAA(actionAreaID)
         actionAreas[actionAreaID]['goals'] = goals
     }
-    // for each action area, add objectives data
+    // for each action area, add objectives: {objectiveID: objective}
     for (actionAreaID of Object.keys(actionAreas)) {
         const objectives = await objectivesQueries.getObjectiveByAA(actionAreaID)
         // sort objectives array by objective.rank
         objectives.sort((a,b) =>  a.rank - b.rank)
-        actionAreas[actionAreaID]['objectives'] = objectives
+        actionAreas[actionAreaID]['objectives'] = new Object()
+        for (objective of objectives) {
+            actionAreas[actionAreaID]['objectives'][objective.id] = objective
+        }
     }
     // add notes to each objective
     for (actionAreaID of Object.keys(actionAreas)) {
-        for (objective of actionAreas[actionAreaID].objectives) {
-            const notes = await notesQueries.getNoteByObjectiveID(objective.objective_id)
-            actionAreas[actionAreaID]['objectives']['notes'] = notes
+        for (const [objectivePK, objective] of Object.entries(actionAreas[actionAreaID]['objectives'])) {
+            const objectiveID = objective.objective_id
+            const notes = await notesQueries.getNoteByObjectiveID(objectiveID)
+            actionAreas[actionAreaID]['objectives'][objectivePK]['notes'] = notes
         }
     }
-    console.log(actionAreas['1']['objectives'])
     return actionAreas
 }
 

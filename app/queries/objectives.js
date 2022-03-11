@@ -4,7 +4,7 @@ async function getObjectiveByAA(actionArea) {
   const queryText = `
       SELECT *
       FROM objectives
-      WHERE action_area = $1
+      WHERE action_area = $1;
     `
   const result = await db.query(queryText, [actionArea])
   const items = result.rows
@@ -14,7 +14,7 @@ async function getObjectiveByAA(actionArea) {
 async function getUniques(field) {
   const queryText = `
       SELECT DISTINCT ${field}
-      FROM objectives
+      FROM objectives;
     `
   const result = await db.query(queryText)
   const items = result.rows

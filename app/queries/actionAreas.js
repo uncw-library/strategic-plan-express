@@ -16,7 +16,7 @@ async function getCompletedItemsByActionArea () {
     SELECT action_area, COUNT(status)
     FROM objectives
     WHERE LOWER(status) = 'complete'
-    GROUP BY action_area
+    GROUP BY action_area;
   `
   const result = await db.query(queryText)
   const items = result.rows
@@ -27,7 +27,7 @@ async function getTotalsByActionArea () {
   const queryText = `
     SELECT action_area, COUNT(status)
     FROM objectives
-    GROUP BY action_area
+    GROUP BY action_area;
   `
   const result = await db.query(queryText)
   const items = result.rows

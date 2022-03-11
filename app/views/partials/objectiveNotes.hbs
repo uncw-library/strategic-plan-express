@@ -1,7 +1,5 @@
 <h4 id="scrollspyHeading4">Notes</h4>
 <div class="container-fluid shadow p-3 mb-5 bg-body rounded" style="position: relative; height:400px; overflow-y:scroll; tabindex:0">
-    {{objectiveData.notes}}
-
     {{#each objectiveData.notes as |note| }}
         <p><strong>{{ note.user }}</strong></p>
         <p>{{ note.text }}</em></p>

@@ -1,8 +1,19 @@
+{{#if @first}}
 <div id="action-area-{{ actionAreaData.id }}" class="container-fluid tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
+{{/if}}
+
+{{#unless @first}}
+<div id="action-area-{{ actionAreaData.id }}" class="container-fluid tab-pane fade" role="tabpanel" aria-labelledby="home-tab">
+{{/unless}}
     {{> actionAreasDescGoals }}
-    <div id="objectivesContainer" class="container-fluid shadow p-3 mb-5 bg-body rounded">
-        {{> objectivesNavbar }}
-        <div class="accordion accordion-flush" id="accordionExample">
+    <div id="objectives-container-{{ actionAreaData.id }}" class="container-fluid shadow p-3 mb-5 bg-body rounded">
+{{!--         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">O
+                <a class="navbar-brand">Objectives</a>
+            </div>
+        </nav> --}}
+        <h3>Objectives</h3>
+        <div id="objective-accordion-{{ actionAreaData.id }}" class="accordion accordion-flush">
             {{#each actionAreaData.objectives as |objective|}}
                 {{> objectiveItem objectiveData=objective }}
             {{/each}}

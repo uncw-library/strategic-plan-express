@@ -1,11 +1,20 @@
 const actionAreasQueries = require('../queries/actionAreas.js')
 
+// Example:  plotData = [
+//    {
+//      id: 6,
+//      rank: 5,
+//      title: 'objective title asdf',
+//      percentComplete: 87.65465 
+//    }, etc
+// ]
+
 async function getPlotData() {
   const actionAreas = await actionAreasQueries.getActionAreas()
   const completeds = await actionAreasQueries.getCompletedItemsByActionArea()
   const totals = await actionAreasQueries.getTotalsByActionArea()
   const percents = computePercents(completeds, totals)
-  const merged = actionAreas.map(i => {
+  const plotData = actionAreas.map(i => {
     return {
       id: i.id,
       rank: i.rank,
@@ -13,7 +22,7 @@ async function getPlotData() {
       percentComplete: percents[i.id]
     }
   })
-  return merged
+  return plotData
 }
 
 function computePercents(completeds, totals) {

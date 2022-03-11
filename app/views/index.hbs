@@ -9,16 +9,11 @@
 <div id="action-areas-container" class="container-fluid shadow p-3 mb-5 bg-body rounded">
     {{!-- confusing names.  actionAreas is the data, actionArea is a template partial. --}}
     {{> actionAreasNavbar }}
-    <div class="tab-content" id="myTabContent">
-        {{#each actionAreas as |actionAreaData|}}
+    <div id="action-areas" class="tab-content">
+        {{#each actionAreasData as |actionAreaData|}}
             {{> actionArea actionAreaData=actionAreaData }}
         {{/each}}
     </div>
 </div>
 
 {{> footer }}
-
-{{!-- {{#each plotData as |actionArea key|}}
-    {{actionArea.rank}}
-{{/each}}
- --}}

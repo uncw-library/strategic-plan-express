@@ -3,7 +3,7 @@
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
             <select class="form-select" multiple aria-label="status select" id="status">
-                {{#each searchOptions.status as |item|}}
+                {{#each searchOptionsData.status as |item|}}
                   <option value="{{item}}">{{item}}</option>
                 {{/each}}
             </select>
@@ -12,15 +12,15 @@
         <div class="mb-3">
             <label for="target-year" class="form-label">Target Year</label>
             <select class="form-select" multiple size="3" aria-label="status select" id="year">
-                {{#each searchOptions.target_academic_year as |item|}}
+                {{#each searchOptionsData.target_academic_year as |item|}}
                   <option value="{{item}}">{{item}}</option>
                 {{/each}}
             </select>
         </div>
         <div class="mb-3">
             <label for="members" class="form-label">Members</label>
-            <select class="form-select" multiple size="3" aria-label="status select" id="user">
-                {{#each searchOptions.members_and_leads as |item|}}
+            <select class="form-select" multiple size="3" aria-label="status select" id="members">
+                {{#each searchOptionsData.members_and_leads as |item|}}
                   <option value="{{item}}">{{item}}</option>
                 {{/each}}
             </select>

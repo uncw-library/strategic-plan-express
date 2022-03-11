@@ -1,3 +1,9 @@
-<div class="container-flex">
-        <a class="row justify-content-md-center" href="/login">Login</a>
-</div>
+{{#if loggedIn}}
+        <div class="container-flex">
+                <a class="row justify-content-md-center" href="/logout">Logout</a>
+        </div>
+{{else}}
+        <div class="container-flex">
+                <a class="row justify-content-md-center" href="/login">Login</a>
+        </div>
+{{/if}}

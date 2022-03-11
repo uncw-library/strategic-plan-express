@@ -1,12 +1,12 @@
 <nav id="action-areas-navbar" class="navbar nav-tabs navbar-expand-lg navbar-light bg-light" role="tablist">
     <div class="container-fluid">
         <a class="navbar-brand">Action Areas</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#action-areas-navbar-items" aria-controls="action-areas-navbar-items" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="action-areas-navbar-items" class="collapse navbar-collapse">
             <ul class="navbar-nav nav nav-tabs me-auto mb-2 mb-lg-0">
-                {{#each actionAreas as |actionArea key|}}
+                {{#each actionAreasData as |actionArea key|}}
                     {{#if @first}}
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="action-area-{{key}}" aria-selected="true">{{actionArea.title}}</a>

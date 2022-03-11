@@ -11,7 +11,7 @@
     {{> actionAreasNavbar }}
     <div id="action-areas" class="tab-content">
         {{#each actionAreasData as |actionAreaData|}}
-            {{> actionArea actionAreaData=actionAreaData }}
+            {{> actionArea actionAreaData=actionAreaData loggedIn=../loggedIn }}
         {{/each}}
     </div>
 </div>

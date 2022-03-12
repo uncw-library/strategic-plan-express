@@ -12,8 +12,24 @@ async function getNoteByObjectiveID(objectiveID) {
   return items
 }
 
+async function getActionAreaObjectiveByNoteID(noteID) {
+  const queryText = `
+      SELECT action_areas.title, objectives.description, objectives.objective_id
+      FROM notes
+      LEFT JOIN objectives
+        ON notes.objective_id = objectives.objective_id
+      LEFT JOin action_areas
+        ON action_areas.id = objectives.action_area
+      WHERE notes.id = $1;
+  `
+  const result = await db.query(queryText, [noteID])
+  const items = result.rows[0]
+  return items
+}
+
 module.exports = {
-    getNoteByObjectiveID
+    getNoteByObjectiveID,
+    getActionAreaObjectiveByNoteID
 }
 
 // async function getAllItems () {
@@ -27,7 +43,7 @@ module.exports = {
 //   return items
 // }
 
-// async function getItemsByID (id) {
+// async function getItemByID (id) {
 //   const queryText = `
 //     SELECT id, slug, dest, username
 //     FROM urls

@@ -37,7 +37,7 @@ passport.deserializeUser(function (user, done) {
   done(null, user)
 })
 
-app.use(express.json())
+// app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 

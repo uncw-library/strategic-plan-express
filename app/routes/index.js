@@ -6,6 +6,7 @@ const router = express.Router()
 const plotController = require('../controllers/plot.js')
 const searchController = require('../controllers/search.js')
 const actionAreasController = require('../controllers/actionAreas.js')
+const notesQueries = require('../queries/notes.js')
 
 
 router.get('/', async function (req, res, next) {
@@ -26,7 +27,7 @@ router.get('/', async function (req, res, next) {
 })
 
 router.get('/login', function (req, res, next) {
-  res.render('login', {
+  res.render('login.hbs', {
     layout: 'layout',
     failure: (req.query.failure),
     loggedIn: false
@@ -42,6 +43,26 @@ router.get('/logout', function (req, res, next) {
   res.redirect('/')
 })
 
+router.get('/add-note/:objectiveID', async function (req, res, next) {
+  const objectiveID = req.params.objectiveID
+  const objective = await notesQueries.getActionAreaObjectiveByNoteID(objectiveID)
+  payload = {
+    objectiveData: objective,
+    requestedObjective: objectiveID
+  }
+  res.render('addNote.hbs', payload)
+})
+
+router.post('/add-note', async function (req, res, next) {
+  const username = req.body.username
+  const note = req.body.note 
+  const objectiveID = req.body.objective
+  console.log(req.body)
+  if (!username.length || !note.length) {
+    res.redirect('/add-note/${objective}')
+  }
+  res.render('addNote.hbs')
+})
 
 
 router.get('/reference', function (req, res, next) {

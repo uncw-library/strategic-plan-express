@@ -1,0 +1,62 @@
+{{!-- the handlebars syntax for including a template partial is {{> filename }} --}}
+{{!-- we can pass a variable to a template partial by {{> filename variableName=variableName }}  --}}
+
+{{> header}}
+
+{{#if failure}}
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        <strong>Whoops...</strong> Not all fields were entered
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+<h1 class="display-4">Add a new note</h1>
+
+<div class="container-fluid p-3 mb-5 bg-light">
+    <h2>Action Area:</h2>
+    <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.actionArea.[0].title }}</h3>
+</div>
+<div class="container-fluid p-3 mb-5 bg-light">
+    <h2>Objective:</h3>
+    <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.description }}</h3>
+</div>
+
+{{#each objectiveData.notes as |note v|}}
+    <div class="container-fluid p-3 mb-5 bg-light">
+        <h2>Note:</h2>
+        <p><strong>{{ note.user }}</strong></p>
+        <p>{{ note.text }}</em></p>
+    </div>  
+{{/each}}
+
+
+<div class="container-fluid p-3 mb-5 bg-light">
+    <h2>New Note:</h2>
+    <form action="/add-note" method="POST">
+    <input type="hidden" id="objectiveID" name="objectiveID" value="{{ objectiveData.id }}">
+    <div class="container-fluid shadow p-3 mb-5 bg-light rounded">
+        <div class="mb-3">
+            <label for="username" class="form-label col-auto">Your email address:</label>
+            <div class="row">
+                <div class="col-auto">
+                    <input type="input-group-text" class="form-control" id="username" name="username" placeholder="smithj">
+                </div>
+                <div class="col-auto">
+                    <span class="input-group-text" id="basic-addon2">@uncw.edu</span>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+          <label for="note" class="form-label">New Note:</label>
+          <textarea class="form-control" id="note" rows="3" name="note"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+
+
+
+{{> footer }}

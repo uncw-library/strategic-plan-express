@@ -6,7 +6,7 @@ const goalsQueries = require('../queries/goals.js')
 // Example:  actionAreas = {
 //     '1': {
 //         id: 1,
-//         rank: 1,
+//         rank: 10,
 //         title: 'asdf',
 //         description: 'asdf',
 //         goals: [
@@ -14,7 +14,8 @@ const goalsQueries = require('../queries/goals.js')
 //             {id: 13, description: 'qwer'}, etc
 //         ],
 //         objectives: {
-//             1: {
+//             4: {
+//                 id: 4
 //                 action_area: 7,
 //                 rank: 14,
 //                 description: 'asdf',
@@ -35,7 +36,7 @@ const goalsQueries = require('../queries/goals.js')
 //                 actions_for_improvement: null,
 //                 status_report: null
 //                 notes: [
-//                     id: 1,
+//                     id: 5,
 //                     text: 'asdf',
 //                     user: 'asdf'  
 //                 ], etc.
@@ -44,6 +45,9 @@ const goalsQueries = require('../queries/goals.js')
 //     }, etc
 // }
 
+
+// All our data in the database can be represented as the actionAreas example above, so
+// this function makes that actionAreas object. 
 async function getActionAreas () {
     const actionAreas = new Object()
     // add action_areas items
@@ -58,7 +62,7 @@ async function getActionAreas () {
     }
     // for each action area, add objectives: {objectiveID: objective}
     for (actionAreaID of Object.keys(actionAreas)) {
-        const objectives = await objectivesQueries.getObjectiveByAA(actionAreaID)
+        const objectives = await objectivesQueries.getObjectivesByAA(actionAreaID)
         // sort objectives array by objective.rank
         objectives.sort((a,b) =>  a.rank - b.rank)
         actionAreas[actionAreaID]['objectives'] = new Object()
@@ -69,8 +73,8 @@ async function getActionAreas () {
     // add notes to each objective
     for (actionAreaID of Object.keys(actionAreas)) {
         for (const [objectivePK, objective] of Object.entries(actionAreas[actionAreaID]['objectives'])) {
-            const objectiveID = objective.objective_id
-            const notes = await notesQueries.getNoteByObjectiveID(objectiveID)
+            const objectiveID = objective.id
+            const notes = await notesQueries.getNotesByObjectiveID(objectiveID)
             actionAreas[actionAreaID]['objectives'][objectivePK]['notes'] = notes
         }
     }

@@ -5,7 +5,13 @@
 {{#unless @first}}
 <div id="action-area-{{ actionAreaData.id }}" class="container-fluid tab-pane fade" role="tabpanel" aria-labelledby="home-tab">
 {{/unless}}
+
+{{!-- Description & Goals block  --}}
+
     {{> actionAreasDescGoals }}
+
+{{!-- end Description and Goals block --}}
+
     <div id="objectives-container-{{ actionAreaData.id }}" class="container-fluid shadow p-3 mb-5 bg-body rounded">
         <div class="row">
             <div class="container-fluid col-12">
@@ -14,7 +20,13 @@
         </div>
         <div id="objective-accordion-{{ actionAreaData.id }}" class="accordion accordion-flush">
             {{#each actionAreaData.objectives as |objective|}}
+
+{{!-- Single Objective block  --}}
+
                 {{> objectiveItem objectiveData=objective loggedIn=../loggedIn }}
+
+{{!-- end Single Objective block --}}
+
             {{/each}}
         </div>
     </div>

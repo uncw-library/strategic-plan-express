@@ -1,6 +1,6 @@
 const db = require('../db.js')
 
-async function getNoteByObjectiveID(objectiveID) {
+async function getNotesByObjectiveID(objectiveID) {
   const queryText = `
       SELECT id, text, notes.user as user
       FROM notes
@@ -14,10 +14,10 @@ async function getNoteByObjectiveID(objectiveID) {
 
 async function getActionAreaObjectiveByNoteID(noteID) {
   const queryText = `
-      SELECT action_areas.title, objectives.description, objectives.objective_id
+      SELECT action_areas.title, objectives.description, objectives.id AS objectives_pk
       FROM notes
       LEFT JOIN objectives
-        ON notes.objective_id = objectives.objective_id
+        ON notes.objective_id = objectives.id
       LEFT JOin action_areas
         ON action_areas.id = objectives.action_area
       WHERE notes.id = $1;
@@ -27,9 +27,18 @@ async function getActionAreaObjectiveByNoteID(noteID) {
   return items
 }
 
+async function addNote(name, notetext, objectiveID) {
+  const queryText = `
+    INSERT INTO notes ("user", "text", objective_id)
+    VALUES ($1, $2, $3)
+  `
+  return await db.query(queryText, [name, notetext, objectiveID])
+}
+
 module.exports = {
-    getNoteByObjectiveID,
-    getActionAreaObjectiveByNoteID
+    getNotesByObjectiveID,
+    getActionAreaObjectiveByNoteID,
+    addNote
 }
 
 // async function getAllItems () {

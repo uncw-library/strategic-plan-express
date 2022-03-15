@@ -7,20 +7,25 @@ const plotController = require('../controllers/plot.js')
 const searchController = require('../controllers/search.js')
 const actionAreasController = require('../controllers/actionAreas.js')
 const notesQueries = require('../queries/notes.js')
+const objectivesQueries = require('../queries/objectives.js')
 
+
+router.post('/login', passport.authenticate('ldapauth', { failureRedirect: '/login?failure=true' }), async (req, res, next) => {
+  res.redirect('/')
+})
+
+router.get('/logout', function (req, res, next) {
+  req.logout()
+  res.redirect('/')
+})
 
 router.get('/', async function (req, res, next) {
-
   // plot data is sent to client js, so it must be json encoded.
-  const plot = JSON.stringify(await plotController.getPlotData())
-  const searchOptions = await searchController.getSearchOptions()
-  const actionAreas = await actionAreasController.getActionAreas()
-
   const payload = {
     title: 'Actual App',
-    plotData: plot,
-    searchOptionsData: searchOptions,
-    actionAreasData: actionAreas,
+    plotData: JSON.stringify(await plotController.getPlotData()),
+    searchOptionsData: await searchController.getSearchOptions(),
+    actionAreasData: await actionAreasController.getActionAreas(),
     loggedIn: req.isAuthenticated()
   }
   res.render('index.hbs', payload)
@@ -34,34 +39,44 @@ router.get('/login', function (req, res, next) {
   })
 })
 
-router.post('/login', passport.authenticate('ldapauth', { failureRedirect: '/login?failure=true' }), async (req, res, next) => {
-  res.redirect('/')
-})
-
-router.get('/logout', function (req, res, next) {
-  req.logout()
-  res.redirect('/')
-})
-
 router.get('/add-note/:objectiveID', async function (req, res, next) {
-  const objectiveID = req.params.objectiveID
-  const objective = await notesQueries.getActionAreaObjectiveByNoteID(objectiveID)
-  payload = {
-    objectiveData: objective,
-    requestedObjective: objectiveID
+  if (!req.isAuthenticated()) {
+    res.redirect('/')
+    return
   }
+
+  const payload = {
+    objectiveData: null,
+    loggedIn: req.isAuthenticated(),
+    failure: false
+  }
+  payload.failure = req.query.error
+  payload.objectiveID = req.params.objectiveID
+  payload.objectiveData = await objectivesQueries.getObjectiveByObjectiveID(payload.objectiveID)
   res.render('addNote.hbs', payload)
 })
 
 router.post('/add-note', async function (req, res, next) {
+  if (!req.isAuthenticated()) {
+    res.redirect('/')
+    return
+  }
   const username = req.body.username
   const note = req.body.note 
-  const objectiveID = req.body.objective
-  console.log(req.body)
-  if (!username.length || !note.length) {
-    res.redirect('/add-note/${objective}')
+  const objectiveID = req.body.objectiveID
+
+  if ( !objectiveID.length ) {
+    res.redirect(`/`)
+    return
   }
-  res.render('addNote.hbs')
+
+  if ( !username.length || !note.length ) {
+    res.redirect(`/add-note/${noteID}?error=form_incomplete`)
+    return
+  }
+
+  notesQueries.addNote(username, note, objectiveID)
+    .then(res.redirect('/'))
 })
 
 

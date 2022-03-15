@@ -1,6 +1,9 @@
 const db = require('../db.js')
 
-async function getObjectiveByAA(actionArea) {
+const notesQueries = require('./notes.js')
+const actionAreasQueries = require('./actionAreas.js')
+
+async function getObjectivesByAA(actionArea) {
   const queryText = `
       SELECT *
       FROM objectives
@@ -21,7 +24,21 @@ async function getUniques(field) {
   return items
 }
 
+async function getObjectiveByObjectiveID(objectiveID) {
+  const queryText = `
+      SELECT *
+      FROM objectives
+      WHERE id = $1
+  `
+  const result = await db.query(queryText, [objectiveID])
+  const objective = result.rows[0]
+  objective['notes'] = await notesQueries.getNotesByObjectiveID(objective.id)
+  objective['actionArea'] = await actionAreasQueries.getActionAreaByObjectiveID(objective.id)
+  return objective
+}
+
 module.exports = {
-  getObjectiveByAA,
-  getUniques
+  getObjectivesByAA,
+  getUniques,
+  getObjectiveByObjectiveID
 }

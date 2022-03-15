@@ -3,6 +3,16 @@
 
 {{> header}}
 
+{{#if failure}}
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        <strong>Whoops...</strong> {{ failure.message }}
+      </div>
+    </div>
+  </div>
+{{/if}}
+
 {{> vizAndSearchRow }}
 
 {{!-- Action Areas container --}}
@@ -11,7 +21,13 @@
     {{> actionAreasNavbar }}
     <div id="action-areas" class="tab-content">
         {{#each actionAreasData as |actionAreaData|}}
+
+        {{!-- Single Action Area block --}}
+
             {{> actionArea actionAreaData=actionAreaData loggedIn=../loggedIn }}
+        
+        {{!-- end Single Action Area block --}}
+
         {{/each}}
     </div>
 </div>

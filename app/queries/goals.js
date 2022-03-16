@@ -1,6 +1,6 @@
 const db = require('../db.js')
 
-async function getGoalsByAA(actionAreaID) {
+async function getGoalsByAA (actionAreaID) {
   const queryText = `
       SELECT id, description
       FROM goals
@@ -13,5 +13,5 @@ async function getGoalsByAA(actionAreaID) {
 }
 
 module.exports = {
-    getGoalsByAA
+  getGoalsByAA
 }

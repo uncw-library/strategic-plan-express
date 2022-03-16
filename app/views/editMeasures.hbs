@@ -1,0 +1,64 @@
+{{!-- the handlebars syntax for including a template partial is {{> filename }} --}}
+{{!-- we can pass a variable to a template partial by {{> filename variableName=variableName }}  --}}
+
+{{> header}}
+
+{{#if failure}}
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-danger" role="alert">
+        <strong>Whoops...</strong> No changes noted.
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+<h1 class="display-4">Edit measures</h1>
+
+<div class="container-fluid p-3 mb-5 bg-light">
+    <h2>Action Area:</h2>
+    <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.actionArea.[0].title }}</h3>
+</div>
+<div class="container-fluid p-3 mb-5 bg-light">
+    <h2>Objective:</h3>
+    <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.description }}</h3>
+</div>
+
+<div class="container-fluid p-3 mb-5 bg-light">
+    <h2>Measures:</h2>
+    <p> (use a space character to save a field as empty)</p>
+    <form action="/edit-measures" method="POST">
+    <input type="hidden" id="objectiveID" name="objectiveID" value="{{ objectiveData.id }}">
+    <div class="container-fluid shadow p-3 mb-5 bg-light rounded">
+        <div class="mb-3">
+            <label for="whatdata" class="form-label col-auto">What data will be collected:</label>
+            <div class="row">
+                <div class="col-10">
+                    <textarea type="input-group-text" style="height:100px;" class="form-control" id="whatdata" name="whatdata" placeholder="{{ objectiveData.what_data_will_be_collected }}"></textarea>
+                </div>
+            </div>
+        </div>
+         <div class="mb-3">
+            <label for="howoften" class="form-label col-auto">How often is this assessment done:</label>
+            <div class="row">
+                <div class="col-10">
+                    <textarea type="input-group-text" style="height:100px;" class="form-control" id="howoften" name="howoften" placeholder="{{ objectiveData.how_often_assessed }}"></textarea>
+                </div>
+            </div>
+        </div>
+         <div class="mb-3">
+            <label for="benchmark" class="form-label col-auto">What is the acceptable benchmark:</label>
+            <div class="row">
+                <div class="col-10">
+                    <textarea type="input-group-text" style="height:100px;" class="form-control" id="benchmark" name="benchmark" placeholder="{{ objectiveData.acceptable_benchmark }}"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+
+
+
+{{> footer }}

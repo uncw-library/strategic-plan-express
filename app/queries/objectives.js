@@ -3,7 +3,7 @@ const db = require('../db.js')
 const notesQueries = require('./notes.js')
 const actionAreasQueries = require('./actionAreas.js')
 
-async function getObjectivesByAA(actionArea) {
+async function getObjectivesByAA (actionArea) {
   const queryText = `
       SELECT *
       FROM objectives
@@ -14,7 +14,7 @@ async function getObjectivesByAA(actionArea) {
   return items
 }
 
-async function getUniques(field) {
+async function getUniques (field) {
   const queryText = `
       SELECT DISTINCT ${field}
       FROM objectives;
@@ -24,7 +24,7 @@ async function getUniques(field) {
   return items
 }
 
-async function getObjectiveByObjectiveID(objectiveID) {
+async function getObjectiveByObjectiveID (objectiveID) {
   const queryText = `
       SELECT *
       FROM objectives
@@ -32,13 +32,35 @@ async function getObjectiveByObjectiveID(objectiveID) {
   `
   const result = await db.query(queryText, [objectiveID])
   const objective = result.rows[0]
-  objective['notes'] = await notesQueries.getNotesByObjectiveID(objective.id)
-  objective['actionArea'] = await actionAreasQueries.getActionAreaByObjectiveID(objective.id)
+  objective.notes = await notesQueries.getNotesByObjectiveID(objective.id)
+  objective.actionArea = await actionAreasQueries.getActionAreaByObjectiveID(objective.id)
   return objective
+}
+
+async function updateObjectives (objectiveID, status, year, leads, members) {
+  const queryText = `
+    UPDATE objectives
+    SET status = $1, target_academic_year = $2, leads = $3, project_members = $4
+    WHERE id = $5
+  `
+  return db.query(queryText, [status, year, leads, members, objectiveID])
+    .then(r => r.rows)
+}
+
+async function updateMeasures (objectiveID, whatdata, howoften, benchmark) {
+  const queryText = `
+    UPDATE objectives
+    SET what_data_will_be_collected = $1, how_often_assessed = $2, acceptable_benchmark = $3
+    WHERE id = $4
+  `
+  return db.query(queryText, [whatdata, howoften, benchmark, objectiveID])
+    .then(r => r.rows)
 }
 
 module.exports = {
   getObjectivesByAA,
   getUniques,
-  getObjectiveByObjectiveID
+  getObjectiveByObjectiveID,
+  updateObjectives,
+  updateMeasures
 }

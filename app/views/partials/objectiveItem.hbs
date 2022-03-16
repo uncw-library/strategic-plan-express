@@ -23,7 +23,7 @@
                 </div>
                 {{#if loggedIn}}
                     <div class="container-fluid col-4 mr-auto d-md-flex justify-content-md-end">
-                        <a href="/edit-objective/{{ objectiveData.id }}" class="btn btn-outline-primary">Edit Summary</a>
+                        <a href="/edit-summary/{{ objectiveData.id }}" class="btn btn-outline-primary">Edit Summary</a>
                     </div>
                 {{/if}}
             </div>
@@ -42,13 +42,13 @@
                 </div>
                 {{#if loggedIn}}
                     <div class="container-fluid col-4 mr-auto d-md-flex justify-content-md-end">
-                        <a href="/edit-objective/{{ objectiveData.id }}" class="btn btn-outline-primary">Edit Measures</a>
+                        <a href="/edit-measures/{{ objectiveData.id }}" class="btn btn-outline-primary">Edit Measures</a>
                     </div>
                 {{/if}}
             </div>
 
             <div class="container-fluid shadow p-3 mb-5 bg-body rounded"
-                style="position: relative; height:300px; overflow-y:scroll; tabindex:0">
+                style="position: relative; height:330px; overflow-y:scroll; tabindex:0">
                 <div>
                     <p><strong>1. What data will be collected? Example: Environmental scan of
                         peer and aspirant academic libraries; Research data management survey to
@@ -64,8 +64,7 @@
                     <p>{{ objectiveData.acceptable_benchmark }}</p>
                     <p><strong>4. Please save any assessment related documentation (final
                         spreadsheets, final reports, etc.) to SharePoint and add a description of
-                        the document along with link(s) to your documents here:</strong></p>
-                    <p>{{ objectiveData.assessment_documents }}</p>
+                        the document along with link(s) to your documents.</strong></p>
                 </div>
             </div>
 

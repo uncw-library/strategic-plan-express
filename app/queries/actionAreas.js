@@ -31,10 +31,10 @@ async function getTotalsByActionArea () {
   `
   const result = await db.query(queryText)
   const items = result.rows
-  return items  
+  return items
 }
 
-async function getActionAreaByObjectiveID(objectiveID) {
+async function getActionAreaByObjectiveID (objectiveID) {
   const queryText = `
       SELECT action_areas.id, action_areas.rank, action_areas.title, action_areas.description
       FROM objectives
@@ -47,7 +47,6 @@ async function getActionAreaByObjectiveID(objectiveID) {
   const items = result.rows
   return items
 }
-
 
 module.exports = {
   getActionAreas,

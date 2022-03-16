@@ -5,11 +5,11 @@ const actionAreasQueries = require('../queries/actionAreas.js')
 //      id: 6,
 //      rank: 5,
 //      title: 'objective title asdf',
-//      percentComplete: 87.65465 
+//      percentComplete: 87.65465
 //    }, etc
 // ]
 
-async function getPlotData() {
+async function getPlotData () {
   const actionAreas = await actionAreasQueries.getActionAreas()
   const completeds = await actionAreasQueries.getCompletedItemsByActionArea()
   const totals = await actionAreasQueries.getTotalsByActionArea()
@@ -25,7 +25,7 @@ async function getPlotData() {
   return plotData
 }
 
-function computePercents(completeds, totals) {
+function computePercents (completeds, totals) {
   const percents = {}
   for (const t of totals) {
     for (const c of completeds) {

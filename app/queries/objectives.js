@@ -7,7 +7,8 @@ async function getObjectivesByAA (actionArea) {
   const queryText = `
       SELECT *
       FROM objectives
-      WHERE action_area = $1;
+      WHERE action_area = $1
+      ORDER BY rank DESC;
     `
   const result = await db.query(queryText, [actionArea])
   const items = result.rows
@@ -22,7 +23,7 @@ async function getObjectivesByAAWithSearchOption (actionArea, options) {
   //            }
 
   // convert v to array if v is string
-  for (const [k, v] of Object.entries(options) ) {
+  for (const [k, v] of Object.entries(options)) {
     if (typeof v === 'string') {
       options[k] = [v]
     }
@@ -38,7 +39,7 @@ async function getObjectivesByAAWithSearchOption (actionArea, options) {
            objectives.leads = ANY ($4)
            OR objectives.project_members = ANY ($4)
         )
-      ;        
+      ORDER BY rank DESC;
   `
   const result = await db.query(queryText, [
     actionArea,

@@ -29,13 +29,11 @@ const searchController = require('./search.js')
 //                 what_data_will_be_collected: 'asdf',
 //                 how_often_assessed: 'asdf',
 //                 acceptable_benchmark: 'asdf',
-//                 assessment_documents: null,
 //                 summary_of_findings: null,
 //                 analysis: null,
 //                 comparision_to_benchmark: null,
 //                 substantiating_evidence: null,
 //                 actions_for_improvement: null,
-//                 status_report: null
 //                 notes: [
 //                     id: 5,
 //                     text: 'asdf',

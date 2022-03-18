@@ -8,6 +8,15 @@ const searchController = require('../controllers/search.js')
 const actionAreasController = require('../controllers/actionAreas.js')
 const notesQueries = require('../queries/notes.js')
 const objectivesQueries = require('../queries/objectives.js')
+const downloadController = require('../controllers/download.js')
+
+router.get('/login', function (req, res, next) {
+  res.render('login.hbs', {
+    layout: 'layout',
+    failure: (req.query.failure),
+    loggedIn: false
+  })
+})
 
 router.post('/login', passport.authenticate('ldapauth', { failureRedirect: '/login?failure=true' }), async (req, res, next) => {
   res.redirect('/')
@@ -30,12 +39,15 @@ router.get('/', async function (req, res, next) {
   res.render('index.hbs', payload)
 })
 
-router.get('/login', function (req, res, next) {
-  res.render('login.hbs', {
-    layout: 'layout',
-    failure: (req.query.failure),
-    loggedIn: false
-  })
+router.post('/', async function (req, res, next) {
+  const payload = {
+    title: 'Actual App',
+    plotData: JSON.stringify(await plotController.getPlotData()),
+    searchOptionsData: await searchController.getSearchOptions(),
+    actionAreasData: await actionAreasController.getSelectedActionAreas(req.body),
+    loggedIn: req.isAuthenticated()
+  }
+  res.render('index.hbs', payload)
 })
 
 router.get('/add-note/:objectiveID', async function (req, res, next) {
@@ -148,9 +160,6 @@ router.get('/edit-measures/:objectiveID', async function (req, res, next) {
     objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID),
     failure: req.query.error || false
   }
-
-  console.log(payload.objectiveData)
-
   res.render('editMeasures.hbs', payload)
 })
 
@@ -195,8 +204,10 @@ router.post('/edit-measures', async function (req, res, next) {
     .then(res.redirect('/'))
 })
 
-router.get('/reference', function (req, res, next) {
-  res.render('reference.hbs', { title: 'Reference' })
+router.get('/download-csv', async function (req, res, next) {
+  downloadController.writeCSV(next)
+    .then(filepath => res.download(filepath))
+    .catch(next)
 })
 
 module.exports = router

@@ -16,55 +16,56 @@
 <h1 class="display-4">Edit summary</h1>
 
 <div class="container-fluid p-3 mb-5 bg-light">
-    <h2>Action Area:</h2>
-    <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.actionArea.[0].title }}</h3>
+  <h2>Action Area:</h2>
+  <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.actionArea.[0].title }}</h3>
 </div>
 <div class="container-fluid p-3 mb-5 bg-light">
-    <h2>Objective:</h3>
-    <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.description }}</h3>
+  <h2>Objective:</h3>
+  <h3 class="container-fluid col-10 mr-auto d-md-flex justify-content-md-end">{{ objectiveData.description }}</h3>
 </div>
 
 <div class="container-fluid p-3 mb-5 bg-light">
-    <h2>Summary:</h2>
-    <p> (use a space character to save a field as empty)</p>
-    <form action="/edit-summary" method="POST">
+  <h2>Summary:</h2>
+  <p> (use a space character to save a field as empty)</p>
+  <form action="/edit-summary" method="POST">
     <input type="hidden" id="objectiveID" name="objectiveID" value="{{ objectiveData.id }}">
     <div class="container-fluid shadow p-3 mb-5 bg-light rounded">
-        <div class="mb-3">
-            <label for="status" class="form-label col-auto">Status:</label>
-            <div class="row">
-                <div class="col-auto">
-                    <input type="input-group-text" class="form-control" id="status" name="status" placeholder="{{ objectiveData.status }}">
-                </div>
-            </div>
+      <div class="mb-3">
+        <label for="status" class="form-label col-auto">Status:</label>
+        <div class="row">
+          <div class="col-auto">
+            <input type="input-group-text" class="form-control" id="status" name="status" placeholder="{{ objectiveData.status }}">
+          </div>
         </div>
-         <div class="mb-3">
-            <label for="year" class="form-label col-auto">Target Academic Year:</label>
-            <div class="row">
-                <div class="col-auto">
-                    <input type="input-group-text" class="form-control" id="year" name="year" placeholder="{{ objectiveData.target_academic_year }}">
-                </div>
-            </div>
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label col-auto">Target Academic Year:</label>
+        <div class="row">
+          <div class="col-auto">
+            <input type="input-group-text" class="form-control" id="year" name="year" placeholder="{{ objectiveData.target_academic_year }}">
+          </div>
         </div>
-         <div class="mb-3">
-            <label for="leads" class="form-label col-auto">Leads:</label>
-            <div class="row">
-                <div class="col-auto">
-                    <input type="input-group-text" class="form-control" id="leads" name="leads" placeholder="{{ objectiveData.leads }}">
-                </div>
-            </div>
+      </div>
+      <div class="mb-3">
+        <label for="leads" class="form-label col-auto">Leads:</label>
+        <div class="row">
+          <div class="col-auto">
+            <input type="input-group-text" class="form-control" id="leads" name="leads" placeholder="{{ objectiveData.leads }}">
+          </div>
         </div>
-         <div class="mb-3">
-            <label for="members" class="form-label col-auto">Members:</label>
-            <div class="row">
-                <div class="col-auto">
-                    <input type="input-group-text" class="form-control" id="members" name="members" placeholder="{{ objectiveData.project_members }}">
-                </div>
-            </div>
+      </div>
+      <div class="mb-3">
+        <label for="members" class="form-label col-auto">Members:</label>
+        <div class="row">
+          <div class="col-auto">
+            <input type="input-group-text" class="form-control" id="members" name="members" placeholder="{{ objectiveData.project_members }}">
+          </div>
         </div>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+  </form>
 </div>
 
 

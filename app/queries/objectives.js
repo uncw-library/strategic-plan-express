@@ -14,6 +14,42 @@ async function getObjectivesByAA (actionArea) {
   return items
 }
 
+async function getObjectivesByAAWithSearchOption (actionArea, options) {
+  // Example:   options = {
+  //              status: ['asdf', 'qwer'] or 'asdf'
+  //              target_academic_year: ['asdf', 'asdf'] or 'asdf'
+  //              members_and_leads: ['asdf', 'asdf'] or 'asdf'
+  //            }
+
+  // convert v to array if v is string
+  for (const [k, v] of Object.entries(options) ) {
+    if (typeof v === 'string') {
+      options[k] = [v]
+    }
+  }
+
+  const queryText = `
+      SELECT *
+      FROM objectives
+      WHERE action_area = $1
+        AND objectives.status = ANY($2)
+        AND objectives.target_academic_year = ANY($3)
+        AND (
+           objectives.leads = ANY ($4)
+           OR objectives.project_members = ANY ($4)
+        )
+      ;        
+  `
+  const result = await db.query(queryText, [
+    actionArea,
+    options.status,
+    options.target_academic_year,
+    options.members_and_leads
+  ])
+  const items = result.rows
+  return items
+}
+
 async function getUniques (field) {
   const queryText = `
       SELECT DISTINCT ${field}
@@ -59,6 +95,7 @@ async function updateMeasures (objectiveID, whatdata, howoften, benchmark) {
 
 module.exports = {
   getObjectivesByAA,
+  getObjectivesByAAWithSearchOption,
   getUniques,
   getObjectiveByObjectiveID,
   updateObjectives,

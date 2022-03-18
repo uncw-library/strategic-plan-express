@@ -17,16 +17,14 @@
 
 {{!-- Action Areas container --}}
 <div id="action-areas-container" class="container-fluid shadow p-3 mb-5 bg-body rounded">
-    {{!-- confusing names.  actionAreas is the data, actionArea is a template partial. --}}
+
     {{> actionAreasNavbar }}
     <div id="action-areas" class="tab-content">
         {{#each actionAreasData as |actionAreaData|}}
 
-        {{!-- Single Action Area block --}}
-
-            {{> actionArea actionAreaData=actionAreaData loggedIn=../loggedIn }}
-        
-        {{!-- end Single Action Area block --}}
+          {{!-- Single Action Area block --}}
+          {{> actionArea actionAreaData=actionAreaData loggedIn=../loggedIn }}
+          {{!-- end Single Action Area block --}}
 
         {{/each}}
     </div>

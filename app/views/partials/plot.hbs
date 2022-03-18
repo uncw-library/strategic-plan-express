@@ -1,44 +1,40 @@
 <div class="col col-xxl-9 col-xl-8 col-lg-8 col-md-12 col-12 d-none d-sm-block">
-    <div id="myPlot" style="width:100%"></div>
+  <div id="myPlot" style="width:100%"></div>
 </div>
 
 <script>
+  var plotData = {{{ plotData }}};
 
-    // var xArray = [55, 49, 44, 24, 15, 90, 95];
-    var plotData = {{{ plotData }}};
+  var yArray = plotData.map(item => `${item.rank}. ${item.title}`);
+  var yLabels = yArray.map(item => item + "  ");
+  var xArray = plotData.map(item => item.percentComplete)
 
-    var yArray = plotData.map(item => `${item.rank}. ${item.title}`);
-    var yLabels = yArray.map(item => item + "  ");
+  var data = [{
+      x: xArray,
+      y: yLabels,
+      type: "bar",
+      orientation: "h",
+      marker: { color: "#cce0e0" }
+  }];
 
-    var xArray = plotData.map(item => item.percentComplete)
+  var layout = {
+      showlegend: false,
+      yaxis: {
+          automargin: true
+      },
+      margin: {
+          l: 1,
+          r: 1,
+          t: 1,
+          b: 1
+      }
+  };
 
-    var data = [{
-        x: xArray,
-        y: yLabels,
-        type: "bar",
-        orientation: "h",
-        marker: { color: "#cce0e0" }
-    }];
+  var options = {
+      displayModeBar: false,
+      responsive: true,
+      staticPlot: true
+  }
 
-    var layout = {
-        // title: "World Wide Wine Production",
-        showlegend: false,
-        yaxis: {
-            automargin: true
-        },
-        margin: {
-            l: 1,
-            r: 1,
-            t: 1,
-            b: 1
-        }
-    };
-
-    var options = {
-        displayModeBar: false,
-        responsive: true,
-        staticPlot: true
-    }
-
-    Plotly.newPlot("myPlot", data, layout, options);
+  Plotly.newPlot("myPlot", data, layout, options);
 </script>

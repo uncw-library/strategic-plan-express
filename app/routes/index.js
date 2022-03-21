@@ -30,7 +30,7 @@ router.get('/logout', function (req, res, next) {
 router.get('/', async function (req, res, next) {
   // plot data is sent to client js, so it must be json encoded.
   const payload = {
-    title: 'Actual App',
+    title: 'Strategic Plan Tracker',
     plotData: JSON.stringify(await plotController.getPlotData()),
     searchOptionsData: await searchController.getSearchOptions(),
     actionAreasData: await actionAreasController.getActionAreas(),
@@ -41,7 +41,7 @@ router.get('/', async function (req, res, next) {
 
 router.post('/', async function (req, res, next) {
   const payload = {
-    title: 'Actual App',
+    title: 'Strategic Plan Tracker',
     plotData: JSON.stringify(await plotController.getPlotData()),
     searchOptionsData: await searchController.getSearchOptions(),
     actionAreasData: await actionAreasController.getSelectedActionAreas(req.body),

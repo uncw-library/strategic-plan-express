@@ -1,0 +1,46 @@
+version: '2'
+services:
+  strategic-plan-express-db-backup:
+    image: libapps-admin.uncw.edu:8000/randall-dev/postgres-sidekick:latest
+    environment:
+      DB_HOST: strategic-plan-express-db
+      DB_NAME: strategic-plan-express
+      PG_PASSWORD: CHANGEME
+    stdin_open: true
+    volumes:
+      - /home/randall/volumes/backups/Backups/strategic-plan-express:/backups
+    tty: true
+  strategic-plan-express-db:
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: CHANGEME
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: strategic-plan-express
+    stdin_open: true
+    volumes:
+      - /home/randall/volumes/strategic-plan-express/pg-data/:/var/lib/postgresql/data
+      - /home/randall/volumes/strategic-plan-express/db_autoimport/:/docker-entrypoint-initdb.d/
+    tty: true
+    ports:
+      - 8028:5432/tcp
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.sidekicks: strategic-plan-express-db-backup
+  strategic-plan-express:
+    image: libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express
+    environment:
+      NODE_ENV: production
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: CHANGEME
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: strategic-plan-express
+      POSTGRES_HOST: strategic-plan-express-db
+      LDAP_USER: CHANGEME
+      LDAP_PASS: CHANGEME
+      LDAP_PORT: 389
+      LDAP_URL: 'ldap://ldap.uncw.edu'
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

@@ -16,7 +16,7 @@ services:
     command: npm run dev
     restart: always
 
-  db:
+  strategic-plan-express-db:
     image: postgres:14.2
     container_name: db
     env_file: .env

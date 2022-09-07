@@ -3,7 +3,7 @@
 ### push to production
 
 ```
-docker build --platform linux/x86_64/v8 -t libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express .
+docker build --no-cache --platform linux/x86_64/v8 -t libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express .
 docker push libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express 
 ```
 

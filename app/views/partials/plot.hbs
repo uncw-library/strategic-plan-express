@@ -7,14 +7,23 @@
 
   var yArray = plotData.map(item => `${item.rank}. ${item.title}`);
   var yLabels = yArray.map(item => item + "  ");
-  var xArray = plotData.map(item => item.percentComplete)
+  var xArray = plotData.map(item => item.percentComplete);
+  var xLabels = plotData.map(item => `${String(item.percentComplete)}%`);
 
   var data = [{
       x: xArray,
       y: yLabels,
       type: "bar",
       orientation: "h",
-      marker: { color: "#cce0e0" }
+      text: xLabels,
+      textposition: 'auto',
+      marker: {
+        color: "#cce0e0",
+        line: {
+          color: 'rgb(8,48,107)',
+          width: 1
+        }
+      }
   }];
 
   var layout = {

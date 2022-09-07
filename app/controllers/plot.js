@@ -33,7 +33,7 @@ function computePercents (completeds, totals) {
         if (t.count === 0) {
           continue
         }
-        percents[t.action_area] = c.count / t.count * 100
+        percents[t.action_area] = Math.round(c.count / t.count * 100)
       }
     }
   }

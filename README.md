@@ -9,6 +9,8 @@ docker push libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express
 
 To spin up a dev box, place a dump of the production db into ./db_autoimport .  Then `docker-compose up`
 
+See it at localhost:3000
+
 To revise the db, first try revising it via the frontend.  (the portions that an end-user might want to revise often are editable via the frontend, when logged in.)   If the frontend doesn't do your revision, you can connect pgAdmin to the db (the port is in rancher in the environment options).
 
 #### The four db tables.  

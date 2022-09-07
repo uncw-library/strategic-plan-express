@@ -7,7 +7,7 @@ services:
     image: libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express
     container_name: strategic-plan-express
     ports:
-      - "8020:3000"
+      - "3000:3000"
     env_file: .env
     volumes:
       - ./app/:/usr/src/app/

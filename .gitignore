@@ -74,4 +74,3 @@ typings/
 package-lock.json
 
 .DS_Store
-db_autoimport

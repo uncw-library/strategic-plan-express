@@ -1,31 +1,37 @@
 <div class="col col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-12">
-  <form action="/" method="POST">
-    <div class="mb-3">
-      <label for="status" class="form-label">Status</label>
-      <select class="form-select" multiple aria-label="status select" id="status" name="status">
-        {{#each searchOptionsData.status as |item|}}
-          <option value="{{item}}">{{item}}</option>
-        {{/each}}
-      </select>
-      <div id="help" class="form-text">You may select more than one in each box.</div>
-    </div>
-    <div class="mb-3">
-      <label for="year" class="form-label">Target Year</label>
-      <select class="form-select" multiple size="3" aria-label="status select" id="year" name="year">
-        {{#each searchOptionsData.target_academic_year as |item|}}
-          <option value="{{item}}">{{item}}</option>
-        {{/each}}
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="members" class="form-label">Members</label>
-      <select class="form-select" multiple size="3" aria-label="status select" id="members" name="members">
-        {{#each searchOptionsData.members_and_leads as |item|}}
-          <option value="{{item}}">{{item}}</option>
-        {{/each}}
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="btn btn-clear btn-outline-dark" role="button" href="/">Clear All</a>
-  </form>
+  <nav class="navbar navbar-light bg-light filter-box">
+    <span class="filter-box-header">
+      <h4>Filter by:</h4>
+      <div id="filter-box-hint" class="form-text">You may select more than one per box.</div>
+    </span>
+    <form action="/" method="POST">
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" multiple aria-label="status select" id="status" name="status">
+          {{#each searchOptionsData.status as |item|}}
+            <option value="{{item}}">{{item}}</option>
+          {{/each}}
+        </select>
+        
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label">Target Year</label>
+        <select class="form-select" multiple size="3" aria-label="status select" id="year" name="year">
+          {{#each searchOptionsData.target_academic_year as |item|}}
+            <option value="{{item}}">{{item}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="members" class="form-label">Members</label>
+        <select class="form-select" multiple size="3" aria-label="status select" id="members" name="members">
+          {{#each searchOptionsData.members_and_leads as |item|}}
+            <option value="{{item}}">{{item}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <a class="btn btn-clear btn-outline-dark" role="button" href="/">Clear All</a>
+    </form>
+</nav>  
 </div>

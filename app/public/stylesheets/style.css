@@ -8,6 +8,10 @@ a {
   color: #00B7FF;
 }
 
+div#filter-box-hint {
+  margin-bottom: 1.2rem;
+}
+
 nav#action-areas-navbar {
   background-color: #006666;
 }

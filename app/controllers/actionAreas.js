@@ -37,7 +37,10 @@ const searchController = require('./search.js')
 //                 notes: [
 //                     id: 5,
 //                     text: 'asdf',
-//                     user: 'asdf'
+//                     user: 'asdf',
+//                     updated_at: datetime,
+//                     created_at: datetime,
+//                     formattedDate: 'Wed Oct 06 2021, 1:25:54 PM'
 //                 ], etc.
 //             }, etc
 //         }
@@ -73,6 +76,7 @@ async function getActionAreas () {
     for (const [objectivePK, objective] of Object.entries(actionAreas[actionAreaID].objectives)) {
       const objectiveID = objective.id
       const notes = await notesQueries.getNotesByObjectiveID(objectiveID)
+      orderAndFormatDates(notes)
       actionAreas[actionAreaID].objectives[objectivePK].notes = notes
     }
   }
@@ -125,10 +129,21 @@ async function getSelectedActionAreas (body) {
     for (const [objectivePK, objective] of Object.entries(actionAreas[actionAreaID].objectives)) {
       const objectiveID = objective.id
       const notes = await notesQueries.getNotesByObjectiveID(objectiveID)
+      orderAndFormatDates(notes)
       actionAreas[actionAreaID].objectives[objectivePK].notes = notes
     }
   }
   return actionAreas
+}
+
+
+// Helpers
+
+function orderAndFormatDates(notes) {
+  notes = notes.sort((a, b) => b.updated_at - a.updated_at)
+  for (const note of notes) {
+    note.formattedDate = `${note.updated_at.toDateString()}, ${note.updated_at.toLocaleTimeString()}`
+  }
 }
 
 module.exports = {

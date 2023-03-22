@@ -1,8 +1,51 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
 }
 
 a {
   color: #00B7FF;
+}
+
+nav#action-areas-navbar {
+  background-color: #006666;
+}
+
+nav#action-areas-navbar a.navbar-brand {
+  margin-right: 3rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  color: black;
+}
+
+h1#aa-title {
+  margin-top: .8rem;
+}
+
+div#aa-desc-goals {
+  margin-bottom: 2.3em;
+}
+
+li.aa-goals-item {
+  margin-bottom: 0.5rem;
+}
+
+div.objectives-container {
+  background-color: #f3e389;
+}
+
+div.summary-item {
+  line-height: 1.6;
+}
+
+p.notes-user {
+  font-family: cursive;
+  text-transform: capitalize; 
+  margin-bottom: 0.5rem;
+}
+
+p.notes-date {
+  margin-bottom: 2.6rem;
 }

@@ -15,29 +15,29 @@
         <div class="container-fluid col-8">
           <h4 id="summary-objective-{{ objectiveData.id }}">Summary</h4>
         </div>
-        {{#if loggedIn}}
           <div class="container-fluid col-4 mr-auto d-md-flex justify-content-md-end">
+          {{#if loggedIn}}
             <a href="/edit-summary/{{ objectiveData.id }}" class="btn btn-outline-primary">Edit Summary</a>
+          {{/if}}
           </div>
-        {{/if}}
       </div>
 
       <div class="container-fluid shadow p-3 mb-5 bg-body rounded" style="position: relative; overflow-y:scroll; tabindex:0">
-        <div><strong>Status: </strong>{{ objectiveData.status }}</div>
-        <div><strong>Target Academic Year: </strong>{{ objectiveData.target_academic_year }}</div>
-        <div><strong>Leads: </strong>{{ objectiveData.leads }}</div>
-        <div><strong>Members: </strong>{{ objectiveData.project_members }}</div>
+        <div class="summary-item summary-status"><strong>Status: </strong>{{ objectiveData.status }}</div>
+        <div class="summary-item summary-year"><strong>Target Academic Year: </strong>{{ objectiveData.target_academic_year }}</div>
+        <div class="summary-item summary-leads"><strong>Leads: </strong>{{ objectiveData.leads }}</div>
+        <div class="summary-item summary-members"><strong>Members: </strong>{{ objectiveData.project_members }}</div>
       </div>
 
       <div class="row">
         <div class="container-fluid col-8">
           <h4 id="measures-objective-{{ objectiveData.id }}">Measures</h4>
         </div>
-        {{#if loggedIn}}
           <div class="container-fluid col-4 mr-auto d-md-flex justify-content-md-end">
+          {{#if loggedIn}}
             <a href="/edit-measures/{{ objectiveData.id }}" class="btn btn-outline-primary">Edit Measures</a>
+          {{/if}}
           </div>
-        {{/if}}
       </div>
 
       <div class="container-fluid shadow p-3 mb-5 bg-body rounded" style="position: relative; height:330px; overflow-y:scroll; tabindex:0">
@@ -89,16 +89,17 @@
         <div class="container-fluid col-9">
           <h4 id="notes-objective-{{ objectiveData.id }}">Notes</h4>
         </div>
-        {{#if loggedIn}}
           <div class="container-fluid col-3 mr-auto d-md-flex justify-content-md-end">
+          {{#if loggedIn}}
             <a href="/add-note/{{ objectiveData.id }}" class="btn btn-outline-primary">Add Note</a>
+          {{/if}}
           </div>
-        {{/if}}
       </div>
       <div class="container-fluid shadow p-3 mb-5 bg-body rounded" style="position: relative; height:300px; overflow-y:scroll; tabindex:0">
         {{#each objectiveData.notes as |note| }}
-          <p><strong>{{ note.user }}</strong></p>
-          <p>{{ note.text }}</em></p>
+          <p class="notes-user"><strong>{{ note.user }}:</strong></p>
+          <p class="notes-text">{{ note.text }}</em></p>
+          <p class="notes-date">{{ note.formattedDate }}</p>
         {{/each}}
       </div>
     </div>

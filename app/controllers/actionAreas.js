@@ -136,10 +136,9 @@ async function getSelectedActionAreas (body) {
   return actionAreas
 }
 
-
 // Helpers
 
-function orderAndFormatDates(notes) {
+function orderAndFormatDates (notes) {
   notes = notes.sort((a, b) => b.updated_at - a.updated_at)
   for (const note of notes) {
     note.formattedDate = `${note.updated_at.toDateString()}, ${note.updated_at.toLocaleTimeString()}`

@@ -5,14 +5,14 @@ const actionAreasController = require('./actionAreas.js')
 
 async function writeCSV (next) {
   const [header, rows] = await makeAllDataFlat()
-  const outputFilename = 'strategic_plan_data.csv'
+  const outputFilename = `strategic_plan_data-${new Date().toISOString().slice(0, 10)}.csv`
   if (!fsSync.existsSync('./app/public/downloads')) {
     fsSync.mkdirSync('./app/public/downloads')
   }
   const outputPath = `./app/public/downloads/${outputFilename}`
   const writer = csvWriter({
     path: outputPath,
-    header: header
+    header
   })
   return await writer.writeRecords(rows)
     .then(() => outputPath) // return the outputPath to the previous function
@@ -34,10 +34,10 @@ async function makeAllDataFlat () {
     'notes'
   ]
   const rows = []
-  for (const [aaID, actionArea] of Object.entries(allData)) {
-    for (const [oID, objective] of Object.entries(actionArea.objectives)) {
+  for (const actionArea of Object.values(allData)) {
+    for (const objective of Object.values(actionArea.objectives)) {
       let notes = ''
-      for (const [nID, note] of Object.entries(objective.notes)) {
+      for (const note of Object.values(objective.notes)) {
         const extraPortion = `"${note.text} -- by ${note.user}"`
         notes = `${extraPortion}, ${notes}`
       }

@@ -28,7 +28,10 @@ async function getObjectivesByAAWithSearchOption (actionArea, options) {
       options[k] = [v]
     }
   }
-
+  // Note:   STRING_TO_ARRAY(x, ',') && $4  means:
+  //   Split x='a,b,c' into ['a','b','c']
+  //   Take $4 == options.members_and_leads == ['d','e','f']
+  //   check if there's any overlap in those two arrays
   const queryText = `
       SELECT *
       FROM objectives
@@ -36,8 +39,8 @@ async function getObjectivesByAAWithSearchOption (actionArea, options) {
         AND objectives.status = ANY($2)
         AND objectives.target_academic_year = ANY($3)
         AND (
-           objectives.leads = ANY ($4)
-           OR objectives.project_members = ANY ($4)
+           STRING_TO_ARRAY(objectives.leads, ',') && $4
+           OR STRING_TO_ARRAY(objectives.project_members, ',') && $4
         )
       ORDER BY rank DESC;
   `
@@ -47,6 +50,8 @@ async function getObjectivesByAAWithSearchOption (actionArea, options) {
     options.target_academic_year,
     options.members_and_leads
   ])
+  console.log(actionArea)
+  console.log(options)
   const items = result.rows
   return items
 }

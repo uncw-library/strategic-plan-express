@@ -24,7 +24,7 @@ const searchController = require('./search.js')
 //                 status: 'Not Started',
 //                 objective_id: 108,
 //                 target_academic_year: '2021 - 2022',
-//                 leads: 'asdf',
+//                 leads: 'asdf,zxcv',
 //                 project_members: 'asdf,qwer',
 //                 what_data_will_be_collected: 'asdf',
 //                 how_often_assessed: 'asdf',
@@ -131,6 +131,14 @@ async function getSelectedActionAreas (body) {
       const notes = await notesQueries.getNotesByObjectiveID(objectiveID)
       orderAndFormatDates(notes)
       actionAreas[actionAreaID].objectives[objectivePK].notes = notes
+    }
+  }
+
+  // remove action areas with objectives == {}
+  const actionAreaIDs = Object.keys(actionAreas)
+  for (const id of actionAreaIDs) {
+    if (!Object.keys(actionAreas[id].objectives).length) {
+      delete actionAreas[id]
     }
   }
   return actionAreas

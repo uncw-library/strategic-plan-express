@@ -8,6 +8,7 @@ const searchController = require('../controllers/search.js')
 const actionAreasController = require('../controllers/actionAreas.js')
 const notesQueries = require('../queries/notes.js')
 const objectivesQueries = require('../queries/objectives.js')
+const constantsQueries = require('../queries/constants.js')
 const downloadController = require('../controllers/download.js')
 
 router.get('/login', function (req, res, next) {
@@ -98,7 +99,11 @@ router.get('/edit-summary/:objectiveID', async function (req, res, next) {
 
   const objectiveID = req.params.objectiveID
   const payload = {
+    statusChoices: await constantsQueries.getStatuses(),
+    yearChoices: await constantsQueries.getYears(),
+    userChoices: await constantsQueries.getUsers(),
     objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID),
+    loggedIn: req.isAuthenticated(),
     failure: req.query.error || false
   }
   res.render('editSummary.hbs', payload)
@@ -123,28 +128,15 @@ router.post('/edit-summary', async function (req, res, next) {
     return
   }
 
-  // if no changes, no changes & send error message to screen
-  if (!bundle.status.length && !bundle.year.length && !bundle.leads.length && !bundle.members.length) {
-    res.redirect(`/edit-summary/${bundle.objectiveID}?error=no_changes_made`)
-    return
+  // convert multiselect arrays to "item1,item2,item3"
+  if (Array.isArray(bundle.leads)) {
+    bundle.leads = bundle.leads.toString()
+  }
+  if (Array.isArray(bundle.members)) {
+    bundle.members = bundle.members.toString()
   }
 
-  // if any bundle items are un-entered, use the previous values already in the db
-  const objective = await objectivesQueries.getObjectiveByObjectiveID(bundle.objectiveID)
-  if (!bundle.status.length) {
-    bundle.status = objective.status
-  }
-  if (!bundle.year.length) {
-    bundle.year = objective.target_academic_year
-  }
-  if (!bundle.leads.length) {
-    bundle.leads = objective.leads
-  }
-  if (!bundle.members.length) {
-    bundle.members = objective.project_members
-  }
-
-  // send the update
+  // // send the update
   objectivesQueries.updateObjectives(bundle.objectiveID, bundle.status, bundle.year, bundle.leads, bundle.members)
     .then(res.redirect('/'))
 })
@@ -158,6 +150,7 @@ router.get('/edit-measures/:objectiveID', async function (req, res, next) {
   const objectiveID = req.params.objectiveID
   const payload = {
     objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID),
+    loggedIn: req.isAuthenticated(),
     failure: req.query.error || false
   }
   res.render('editMeasures.hbs', payload)

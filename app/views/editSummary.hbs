@@ -26,43 +26,93 @@
 
 <div class="container-fluid p-3 mb-5 bg-light">
   <h2>Summary:</h2>
-  <p> (use a space character to save a field as empty)</p>
   <form action="/edit-summary" method="POST">
     <input type="hidden" id="objectiveID" name="objectiveID" value="{{ objectiveData.id }}">
+  
     <div class="container-fluid shadow p-3 mb-5 bg-light rounded">
+
+      {{!-- Status selector --}}
       <div class="mb-3">
         <label for="status" class="form-label col-auto">Status:</label>
-        <div class="row">
-          <div class="col-auto">
-            <input type="input-group-text" class="form-control" id="status" name="status" placeholder="{{ objectiveData.status }}">
-          </div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="year" class="form-label col-auto">Target Academic Year:</label>
-        <div class="row">
-          <div class="col-auto">
-            <input type="input-group-text" class="form-control" id="year" name="year" placeholder="{{ objectiveData.target_academic_year }}">
-          </div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="leads" class="form-label col-auto">Leads:</label>
-        <div class="row">
-          <div class="col-auto">
-            <input type="input-group-text" class="form-control" id="leads" name="leads" placeholder="{{ objectiveData.leads }}">
-          </div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="members" class="form-label col-auto">Members:</label>
-        <div class="row">
-          <div class="col-auto">
-            <input type="input-group-text" class="form-control" id="members" name="members" placeholder="{{ objectiveData.project_members }}">
-          </div>
-        </div>
+        <br><small id="previousStatus">Previously - {{objectiveData.status}}</small>
+        <select class="form-select" aria-label="objectiveStatus" id="status" name="status">
+        {{! set previously value as the default selector choice}}
+        {{#each statusChoices as |statusChoice|}}
+          {{#if (equal statusChoice.status ../objectiveData.status ) }}
+          <option value="{{statusChoice.status}}" selected>{{statusChoice.status}}</option>
+          {{/if}}
+        {{/each}}
+        {{! set non-previously-selected values as selector choices}}
+        {{#each statusChoices as |statusChoice|}}
+          {{#if (notequal statusChoice.status ../objectiveData.status ) }}
+          <option value="{{statusChoice.status}}">{{statusChoice.status}}</option>
+          {{/if}}
+        {{/each}}
+        </select>
       </div>
 
+      {{!-- Year selector --}}
+      <div class="mb-3">
+        <label for="year" class="form-label col-auto">Target Academic Year:</label>
+        <br><small id="previousYear">Previously - {{objectiveData.target_academic_year}}</small>
+        <select class="form-select" aria-label="objectiveYear" id="year" name="year">
+        {{! set previously value as the default selector choice}}
+        {{#each yearChoices as |yearChoice|}}
+          {{#if (equal yearChoice.year ../objectiveData.target_academic_year ) }}
+          <option value="{{yearChoice.year}}" selected>{{yearChoice.year}}</option>
+          {{/if}}
+        {{/each}}
+        {{! set non-previously-selected values as selector choices}}
+        {{#each yearChoices as |yearChoice|}}
+          {{#if (notequal yearChoice.year ../objectiveData.target_academic_year ) }}
+          <option value="{{yearChoice.year}}">{{yearChoice.year}}</option>
+          {{/if}}
+        {{/each}}
+        </select>
+      </div>
+
+      {{!-- Leads selector --}}
+      <div class="mb-3">
+        <label for="leads" class="form-label col-auto">Leads:</label>
+        <br><small id="previousLeads">Previously - {{objectiveData.leads}}</small>
+        <select multiple class="form-select" aria-label="objectiveLeads" id="leads" name="leads" size="6">
+        {{! make previous selection the default selected choice}}
+        {{#each userChoices as |userChoice|}}
+          {{#if (includes userChoice.name ../objectiveData.leads ) }}
+          <option value="{{userChoice.name}}" selected>{{userChoice.name}}</option>
+          {{/if}}
+        {{/each}}
+        {{! then fill in the non-previous selections}}
+        {{#each userChoices as |userChoice|}}
+          {{#if (notincludes userChoice.name ../objectiveData.leads ) }}
+          <option value="{{userChoice.name}}">{{userChoice.name}}</option>
+          {{/if}}
+        {{/each}}
+        </select>
+      </div>
+
+      {{!-- Members selector --}}
+      <div class="mb-3">
+        <label for="members" class="form-label col-auto">Members:</label>
+        <br><small id="previousMembers">Previously - {{objectiveData.project_members}}</small>
+        <select multiple class="form-select" aria-label="objectiveMembers" id="members" name="members" size="6">
+        {{! make previous selection the default selected choice}}
+        {{#each userChoices as |userChoice|}}
+          {{#if (includes userChoice.name ../objectiveData.project_members ) }}
+          <option value="{{userChoice.name}}" selected>{{userChoice.name}}</option>
+          {{/if}}
+        {{/each}}
+        {{! then fill in the non-previous selections}}
+        {{#each userChoices as |userChoice|}}
+          {{#if (notincludes userChoice.name ../objectiveData.project_members ) }}
+          <option value="{{userChoice.name}}">{{userChoice.name}}</option>
+          {{/if}}
+        {{/each}}
+        </select>
+        <small id="membersHelpBlock" class="form-text text-muted">
+          You may select multiple people using Shift-click or Ctrl-click.
+        </small>
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>

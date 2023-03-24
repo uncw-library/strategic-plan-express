@@ -49,6 +49,32 @@ app.use(function (req, res, next) {
   next(createError(404))
 })
 
+hbs.registerHelper('equal', function (arg1, arg2) {
+  return (arg1 === arg2)
+})
+
+hbs.registerHelper('notequal', function (arg1, arg2) {
+  return (arg1 !== arg2)
+})
+
+hbs.registerHelper('includes', function (needle, haystack) {
+  // haystack is like "name1,name2,name3"
+  if (!needle || !haystack) {
+    return false
+  }
+  const isMatch = (haystack === needle) || (haystack.split(',').includes(needle))
+  return isMatch
+})
+
+hbs.registerHelper('notincludes', function (needle, haystack) {
+  // haystack is like "name1,name2,name3"
+  if (!needle || !haystack) {
+    return true
+  }
+  const isMatch = (haystack === needle) || (haystack.split(',').includes(needle))
+  return !isMatch
+})
+
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

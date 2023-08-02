@@ -11,6 +11,13 @@
     <title>Strategic Plan Tracker</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.ready.then(registration => {
+        registration.unregister();
+      });
+    }
+    </script>
   </head>
   <body>
     {{{body}}}

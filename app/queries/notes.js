@@ -2,7 +2,7 @@ const db = require('../db.js')
 
 async function getNotesByObjectiveID (objectiveID) {
   const queryText = `
-      SELECT id, text, notes.user as user, updated_at, created_at 
+      SELECT id, text, notes.user as user, updated_at
       FROM notes
       WHERE objective_id = $1
       ORDER BY id;
@@ -29,12 +29,11 @@ async function getActionAreaObjectiveByNoteID (noteID) {
 
 async function addNote (name, notetext, objectiveID) {
   const updatedDate = new Date()
-  const createdDate = new Date()
   const queryText = `
-    INSERT INTO notes ("user", "text", objective_id, updated_at, created_at)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO notes ("user", "text", objective_id, updated_at)
+    VALUES ($1, $2, $3, $4)
   `
-  return await db.query(queryText, [name, notetext, objectiveID, updatedDate, createdDate])
+  return await db.query(queryText, [name, notetext, objectiveID, updatedDate])
 }
 
 module.exports = {

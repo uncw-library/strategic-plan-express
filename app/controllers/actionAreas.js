@@ -40,7 +40,6 @@ const searchController = require('./search.js')
 //                     text: 'asdf',
 //                     user: 'asdf',
 //                     updated_at: datetime,
-//                     created_at: datetime,
 //                     formattedDate: 'Wed Oct 06 2021, 1:25:54 PM'
 //                 }, etc.
 //                ],

@@ -1,5 +1,11 @@
 # strategic-plan-express
 
+Note:  these display term updates were requested & implemented in 2023.  The code retains the old terms, but the html uses the new terms.
+
+    "Action Areas" => "Pillars"
+    "Goals" => "Priorities"
+    "Objectives" => "Strategy"
+
 ### push to production
 
 ```

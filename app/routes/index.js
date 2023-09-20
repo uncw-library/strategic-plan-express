@@ -203,4 +203,10 @@ router.get('/download-csv', async function (req, res, next) {
     .catch(next)
 })
 
+router.get('/download-report', async function (req, res, next) {
+  downloadController.writeReport(next)
+    .then(filepath => res.download(filepath))
+    .catch(next)
+})
+
 module.exports = router

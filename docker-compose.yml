@@ -3,7 +3,7 @@ version: '3.7'
 services:
   strategic-plan-express:
     build: .
-    platform: linux/x86_64/v8
+    platform: linux/amd64
     image: libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express
     container_name: strategic-plan-express
     ports:

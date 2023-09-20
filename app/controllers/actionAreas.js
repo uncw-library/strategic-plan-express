@@ -35,13 +35,15 @@ const searchController = require('./search.js')
 //                 substantiating_evidence: null,
 //                 actions_for_improvement: null,
 //                 notes: [
+//                 {
 //                     id: 5,
 //                     text: 'asdf',
 //                     user: 'asdf',
 //                     updated_at: datetime,
 //                     created_at: datetime,
 //                     formattedDate: 'Wed Oct 06 2021, 1:25:54 PM'
-//                 ], etc.
+//                 }, etc.
+//                ],
 //             }, etc
 //         }
 //     }, etc

@@ -1,4 +1,5 @@
 const fsSync = require('fs')
+const fs = require('fs/promises');
 const csvWriter = require('csv-writer').createArrayCsvWriter
 
 const actionAreasController = require('./actionAreas.js')
@@ -70,6 +71,25 @@ async function makeAllDataFlat () {
   return [headers, rows]
 }
 
+async function writeReport (next) {
+  const filetext = await buildReportText(next)
+  const outputFilename = `strategic_plan_report-${new Date().toISOString().slice(0, 10)}.csv`
+  if (!fsSync.existsSync('./app/public/downloads')) {
+    fsSync.mkdirSync('./app/public/downloads')
+  }
+  const outputPath = `./app/public/downloads/${outputFilename}`
+  return await fs.writeFile(outputPath, filetext)
+    .then(() => outputPath)
+    .catch(next)
+}
+
+async function buildReportText(next) {
+  const allData = await actionAreasController.getActionAreas()
+  return Promise.resolve(JSON.stringify(Object.values(allData)))
+    .catch(new Error('fail'))
+}
+
 module.exports = {
-  writeCSV
+  writeCSV,
+  writeReport
 }

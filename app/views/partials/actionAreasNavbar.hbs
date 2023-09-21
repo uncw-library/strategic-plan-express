@@ -9,12 +9,12 @@
         {{#each actionAreasData as |actionArea key|}}
           {{#if @first}}
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="action-area-{{key}}" aria-selected="true">{{actionArea.title}}</a>
+              <a class="nav-link active" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="action-area-{{key}}" aria-selected="true">{{actionArea.abbr_title}}</a>
             </li>
           {{/if}}
           {{#unless @first}}
             <li class="nav-item">
-              <a class="nav-link" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="action-area-{{key}}" aria-selected="true">{{actionArea.title}}</a>
+              <a class="nav-link" id="action-area-{{key}}-tab" data-bs-toggle="tab" data-bs-target="#action-area-{{key}}" role="tab" aria-controls="action-area-{{key}}" aria-selected="true">{{actionArea.abbr_title}}</a>
             </li>
           {{/unless}}
         {{/each}}

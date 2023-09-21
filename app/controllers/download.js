@@ -1,11 +1,11 @@
 const fsSync = require('fs')
-const fs = require('fs/promises');
+const fs = require('fs/promises')
 const csvWriter = require('csv-writer').createArrayCsvWriter
 
 const actionAreasController = require('./actionAreas.js')
 
 async function writeCSV (next) {
-  const [header, rows] = await makeAllDataFlat()
+  const [header, rows] = await makeAllDataFlat(next)
   const outputFilename = `strategic_plan_data-${new Date().toISOString().slice(0, 10)}.csv`
   if (!fsSync.existsSync('./app/public/downloads')) {
     fsSync.mkdirSync('./app/public/downloads')
@@ -16,12 +16,12 @@ async function writeCSV (next) {
     header
   })
   return await writer.writeRecords(rows)
-    .then(() => outputPath) // return the outputPath to the previous function
+    .then(() => outputPath) // writeCSV() returns the outputPath
     .catch(next)
 }
 
-async function makeAllDataFlat () {
-  const allData = await actionAreasController.getActionAreas()
+async function makeAllDataFlat (next) {
+  const allData = await actionAreasController.getActionAreas(next).catch(next)
   const headers = [
     'actionarea',
     'objective',
@@ -72,7 +72,7 @@ async function makeAllDataFlat () {
 }
 
 async function writeReport (next) {
-  const filetext = await buildReportText(next)
+  const filetext = await buildReportText(next).catch(next)
   const outputFilename = `strategic_plan_report-${new Date().toISOString().slice(0, 10)}.csv`
   if (!fsSync.existsSync('./app/public/downloads')) {
     fsSync.mkdirSync('./app/public/downloads')
@@ -83,10 +83,10 @@ async function writeReport (next) {
     .catch(next)
 }
 
-async function buildReportText(next) {
+async function buildReportText (next) {
   const allData = await actionAreasController.getActionAreas()
   return Promise.resolve(JSON.stringify(Object.values(allData)))
-    .catch(new Error('fail'))
+    .catch(next)
 }
 
 module.exports = {

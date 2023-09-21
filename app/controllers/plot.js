@@ -1,24 +1,29 @@
 const actionAreasQueries = require('../queries/actionAreas.js')
+const objectivesQueries = require('../queries/objectives.js')
 
-// Example:  plotData = [
-//    {
-//      id: 6,
-//      rank: 5,
-//      title: 'objective title asdf',
-//      percentComplete: 87.65465
-//    }, etc
-// ]
+/* Example
+  plotData = [
+    {
+      id: 6,
+      rank: 5,
+      title: 'objective title asdf',
+      abbr_title: 'asdf',
+      percentComplete: 87.65465
+    }, etc
+  ]
+*/
 
-async function getPlotData () {
-  const actionAreas = await actionAreasQueries.getActionAreas()
-  const completeds = await actionAreasQueries.getCompletedItemsByActionArea()
-  const totals = await actionAreasQueries.getTotalsByActionArea()
+async function getPlotData (next) {
+  const actionAreas = await actionAreasQueries.getActionAreas(next).catch(next)
+  const completeds = await objectivesQueries.getCompletedObjectivesByActionArea(next).catch(next)
+  const totals = await objectivesQueries.getTotalObjectivesByActionArea(next).catch(next)
   const percents = computePercents(completeds, totals)
   const plotData = actionAreas.map(i => {
     return {
       id: i.id,
       rank: i.rank,
       title: i.title,
+      abbr_title: i.abbr_title,
       percentComplete: percents[i.id]
     }
   })

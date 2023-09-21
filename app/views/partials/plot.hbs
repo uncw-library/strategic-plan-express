@@ -5,7 +5,7 @@
 <script>
   var plotData = {{{ plotData }}};
 
-  var yArray = plotData.map(item => `${item.rank}. ${item.title}`);
+  var yArray = plotData.map(item => `${item.abbr_title}`);
   var yLabels = yArray.map(item => item + "  ");
   var xArray = plotData.map(item => item.percentComplete);
   var xLabels = plotData.map(item => `${String(item.percentComplete)}%`);

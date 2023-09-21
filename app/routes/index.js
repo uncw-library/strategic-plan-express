@@ -32,20 +32,22 @@ router.get('/', async function (req, res, next) {
   // plot data is sent to client js, so it must be json encoded.
   const payload = {
     title: 'Strategic Plan Tracker',
-    plotData: JSON.stringify(await plotController.getPlotData()),
-    searchOptionsData: await searchController.getSearchOptions(),
-    actionAreasData: await actionAreasController.getActionAreas(),
+    plotData: JSON.stringify(await plotController.getPlotData(next).catch(next)),
+    searchOptionsData: await searchController.getSearchOptions(next).catch(next),
+    actionAreasData: await actionAreasController.getActionAreas(next).catch(next),
     loggedIn: req.isAuthenticated()
   }
   res.render('index.hbs', payload)
 })
 
 router.post('/', async function (req, res, next) {
+  // search box endpoint
+  // plot data is sent to client js, so it must be json encoded.
   const payload = {
     title: 'Strategic Plan Tracker',
-    plotData: JSON.stringify(await plotController.getPlotData()),
-    searchOptionsData: await searchController.getSearchOptions(),
-    actionAreasData: await actionAreasController.getSelectedActionAreas(req.body),
+    plotData: JSON.stringify(await plotController.getPlotData(next).catch(next)),
+    searchOptionsData: await searchController.getSearchOptions(next).catch(next),
+    actionAreasData: await actionAreasController.getSelectedActionAreas(req.body, next).catch(next),
     loggedIn: req.isAuthenticated()
   }
   res.render('index.hbs', payload)
@@ -56,7 +58,6 @@ router.get('/add-note/:objectiveID', async function (req, res, next) {
     res.redirect('/')
     return
   }
-
   const payload = {
     objectiveData: null,
     loggedIn: req.isAuthenticated(),
@@ -64,7 +65,7 @@ router.get('/add-note/:objectiveID', async function (req, res, next) {
   }
   payload.failure = req.query.error
   payload.objectiveID = req.params.objectiveID
-  payload.objectiveData = await objectivesQueries.getObjectiveByObjectiveID(payload.objectiveID)
+  payload.objectiveData = await objectivesQueries.getObjectiveByObjectiveID(payload.objectiveID, next).catch(next)
   res.render('addNote.hbs', payload)
 })
 
@@ -87,8 +88,9 @@ router.post('/add-note', async function (req, res, next) {
     return
   }
 
-  notesQueries.addNote(username, note, objectiveID)
+  notesQueries.addNote(username, note, objectiveID, next)
     .then(res.redirect('/'))
+    .catch(next)
 })
 
 router.get('/edit-summary/:objectiveID', async function (req, res, next) {
@@ -99,10 +101,10 @@ router.get('/edit-summary/:objectiveID', async function (req, res, next) {
 
   const objectiveID = req.params.objectiveID
   const payload = {
-    statusChoices: await constantsQueries.getStatuses(),
-    yearChoices: await constantsQueries.getYears(),
-    userChoices: await constantsQueries.getUsers(),
-    objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID),
+    statusChoices: await constantsQueries.getStatuses(next).catch(next),
+    yearChoices: await constantsQueries.getYears(next).catch(next),
+    userChoices: await constantsQueries.getUsers(next).catch(next),
+    objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID, next).catch(next),
     loggedIn: req.isAuthenticated(),
     failure: req.query.error || false
   }
@@ -136,9 +138,10 @@ router.post('/edit-summary', async function (req, res, next) {
     bundle.members = bundle.members.toString()
   }
 
-  // // send the update
-  objectivesQueries.updateObjectives(bundle.objectiveID, bundle.status, bundle.year, bundle.leads, bundle.members)
+  // send the update
+  objectivesQueries.updateObjectives(bundle.objectiveID, bundle.status, bundle.year, bundle.leads, bundle.members, next)
     .then(res.redirect('/'))
+    .catch(next)
 })
 
 router.get('/edit-measures/:objectiveID', async function (req, res, next) {
@@ -149,7 +152,7 @@ router.get('/edit-measures/:objectiveID', async function (req, res, next) {
 
   const objectiveID = req.params.objectiveID
   const payload = {
-    objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID),
+    objectiveData: await objectivesQueries.getObjectiveByObjectiveID(objectiveID, next).catch(next),
     loggedIn: req.isAuthenticated(),
     failure: req.query.error || false
   }
@@ -181,7 +184,7 @@ router.post('/edit-measures', async function (req, res, next) {
   }
 
   // if any bundle items are un-entered, use the previous values already in the db
-  const objective = await objectivesQueries.getObjectiveByObjectiveID(bundle.objectiveID)
+  const objective = await objectivesQueries.getObjectiveByObjectiveID(bundle.objectiveID, next).catch(next)
   if (!bundle.whatdata.length) {
     bundle.whatdata = objective.what_data_will_be_collected
   }
@@ -193,8 +196,9 @@ router.post('/edit-measures', async function (req, res, next) {
   }
 
   // send the update
-  objectivesQueries.updateMeasures(bundle.objectiveID, bundle.whatdata, bundle.howoften, bundle.benchmark)
+  objectivesQueries.updateMeasures(bundle.objectiveID, bundle.whatdata, bundle.howoften, bundle.benchmark, next)
     .then(res.redirect('/'))
+    .catch(next)
 })
 
 router.get('/download-csv', async function (req, res, next) {

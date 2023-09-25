@@ -31,7 +31,7 @@ async function getObjectivesByGoalID (goalID, next) {
   return items
 }
 
-async function getObjectivesByAAWithSearchOption (actionArea, options, next) {
+async function getObjectivesByGoalWithSearchOption (goalID, options, next) {
   /* Example:
     options = {
       status: ['asdf', 'qwer'] or 'asdf'
@@ -40,14 +40,14 @@ async function getObjectivesByAAWithSearchOption (actionArea, options, next) {
     }
   */
 
-  // convert to array if a string
+  // convert 'options' to array if a string
   for (const [k, v] of Object.entries(options)) {
     if (typeof v === 'string') {
       options[k] = [v]
     }
   }
 
-  /* SQL strange query:
+  /* in this strange SQL query:
     STRING_TO_ARRAY(x, ',') && $4  means:
       Split x='a,b,c' into ['a','b','c']
       Take $4 == options.members_and_leads == ['d','e','f']
@@ -56,17 +56,17 @@ async function getObjectivesByAAWithSearchOption (actionArea, options, next) {
   const queryText = `
       SELECT *
       FROM objectives
-      WHERE action_area = $1
+      WHERE objectives.goal = $1
         AND objectives.status = ANY($2)
         AND objectives.target_academic_year = ANY($3)
         AND (
            STRING_TO_ARRAY(objectives.leads, ',') && $4
            OR STRING_TO_ARRAY(objectives.project_members, ',') && $4
         )
-      ORDER BY rank DESC;
+      ORDER BY objectives.rank DESC;
   `
   const result = await db.query(queryText, [
-    actionArea,
+    goalID,
     options.status,
     options.target_academic_year,
     options.members_and_leads
@@ -114,13 +114,13 @@ async function updateObjectives (objectiveID, status, year, leads, members, next
     .catch(next)
 }
 
-async function updateMeasures (objectiveID, whatdata, howoften, benchmark, next) {
+async function updateMeasures (bundle, next) {
   const queryText = `
     UPDATE objectives
-    SET what_data_will_be_collected = $1, how_often_assessed = $2, acceptable_benchmark = $3
-    WHERE id = $4
+    SET what_data_will_be_collected = $1, how_often_assessed = $2, acceptable_benchmark = $3, assessment_documents = $4
+    WHERE id = $5
   `
-  return db.query(queryText, [whatdata, howoften, benchmark, objectiveID])
+  return db.query(queryText, [bundle.whatdata, bundle.howoften, bundle.benchmark, bundle.documents, bundle.objectiveID])
     .then(r => r.rows)
     .catch(next)
 }
@@ -156,7 +156,7 @@ async function getTotalObjectivesByActionArea (next) {
 
 module.exports = {
   getObjectivesByGoalID,
-  getObjectivesByAAWithSearchOption,
+  getObjectivesByGoalWithSearchOption,
   getUniques,
   getObjectiveByObjectiveID,
   updateObjectives,

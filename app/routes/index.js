@@ -41,7 +41,7 @@ router.get('/', async function (req, res, next) {
 })
 
 router.post('/', async function (req, res, next) {
-  // search box endpoint
+  // "Filter by:" search box uses this endpoint
   // plot data is sent to client js, so it must be json encoded.
   const payload = {
     title: 'Strategic Plan Tracker',
@@ -168,7 +168,8 @@ router.post('/edit-measures', async function (req, res, next) {
     objectiveID: req.body.objectiveID,
     whatdata: req.body.whatdata,
     howoften: req.body.howoften,
-    benchmark: req.body.benchmark
+    benchmark: req.body.benchmark,
+    documents: req.body.documents
   }
 
   // shortcircuit if there's no objectiveID to work with
@@ -196,7 +197,7 @@ router.post('/edit-measures', async function (req, res, next) {
   }
 
   // send the update
-  objectivesQueries.updateMeasures(bundle.objectiveID, bundle.whatdata, bundle.howoften, bundle.benchmark, next)
+  objectivesQueries.updateMeasures(bundle, next)
     .then(res.redirect('/'))
     .catch(next)
 })

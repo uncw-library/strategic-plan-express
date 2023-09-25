@@ -82,7 +82,7 @@ async function getActionAreas (next) {
       for (const objective of Object.values(goal.objectives)) {
         const notes = await notesQueries.getNotesByObjectiveID(objective.id, next).catch(next)
         orderAndFormatDates(notes)
-        actionAreas[actionArea.id].goals[goal.id].objectives[objective.id].notes = notes
+        objective.notes = notes
       }
     }
   }
@@ -115,38 +115,39 @@ async function getSelectedActionAreas (body, next) {
   for (const item of aaResults) {
     actionAreas[item.id] = item
   }
-  // for each action area, add goals data
-  for (const actionAreaID of Object.keys(actionAreas)) {
-    const goals = await goalsQueries.getGoalsByAA(actionAreaID, next).catch(next)
-    actionAreas[actionAreaID].goals = goals
+  // add goals for each action area
+  for (const actionArea of Object.values(actionAreas)) {
+    const goals = await goalsQueries.getGoalsByAA(actionArea.id, next).catch(next)
+    goals.sort((a, b) => a.rank - b.rank)
+    actionArea.goals = {}
+    for (const goal of goals) {
+      actionArea.goals[goal.id] = goal
+    }
   }
-  // for each action area, add objectives: {objectiveID: objective}
-  for (const actionAreaID of Object.keys(actionAreas)) {
-    const objectives = await objectivesQueries.getObjectivesByAAWithSearchOption(actionAreaID, selectedSearchOptions, next).catch(next)
-    // sort objectives array by objective.rank
-    objectives.sort((a, b) => a.rank - b.rank)
-    actionAreas[actionAreaID].objectives = {}
-    for (const objective of objectives) {
-      actionAreas[actionAreaID].objectives[objective.id] = objective
+  // add objective to each goal
+  for (const actionArea of Object.values(actionAreas)) {
+    for (const goal of Object.values(actionArea.goals)) {
+      const objectives = await objectivesQueries.getObjectivesByGoalWithSearchOption(goal.id, selectedSearchOptions, next).catch(next)
+      objectives.sort((a, b) => a.rank - b.rank)
+      goal.objectives = {}
+      for (const objective of objectives) {
+        goal.objectives[objective.id] = objective
+      }
     }
   }
   // add notes to each objective
-  for (const actionAreaID of Object.keys(actionAreas)) {
-    for (const [objectivePK, objective] of Object.entries(actionAreas[actionAreaID].objectives)) {
-      const objectiveID = objective.id
-      const notes = await notesQueries.getNotesByObjectiveID(objectiveID, next).catch(next)
-      orderAndFormatDates(notes)
-      actionAreas[actionAreaID].objectives[objectivePK].notes = notes
+  for (const actionArea of Object.values(actionAreas)) {
+    for (const goal of Object.values(actionArea.goals)) {
+      for (const objective of Object.values(goal.objectives)) {
+        const notes = await notesQueries.getNotesByObjectiveID(objective.id, next).catch(next)
+        orderAndFormatDates(notes)
+        objective.notes = notes
+      }
     }
   }
 
-  // remove action areas with objectives == {}
-  const actionAreaIDs = Object.keys(actionAreas)
-  for (const id of actionAreaIDs) {
-    if (!Object.keys(actionAreas[id].objectives).length) {
-      delete actionAreas[id]
-    }
-  }
+  removeGoalsWithNoObjectives(actionAreas)
+  removeActionAreasWithNoGoals(actionAreas)
   return actionAreas
 }
 
@@ -156,6 +157,32 @@ function orderAndFormatDates (notes) {
   notes = notes.sort((a, b) => b.updated_at - a.updated_at)
   for (const note of notes) {
     note.formattedDate = `${note.updated_at.toDateString()}, ${note.updated_at.toLocaleTimeString()}`
+  }
+}
+
+function removeGoalsWithNoObjectives (actionAreas) {
+  const forGoalDelete = []
+  for (const [actionAreaID, actionArea] of Object.entries(actionAreas)) {
+    for (const [goalID, goal] of Object.entries(actionArea.goals)) {
+      if (Object.keys(goal.objectives).length === 0) {
+        forGoalDelete.push([actionAreaID, goalID])
+      }
+    }
+  }
+  for (const [actionAreaID, goalID] of forGoalDelete) {
+    delete actionAreas[actionAreaID].goals[goalID]
+  }
+}
+
+function removeActionAreasWithNoGoals (actionAreas) {
+  const forActionAreaDelete = []
+  for (const [actionAreaID, actionArea] of Object.entries(actionAreas)) {
+    if (Object.keys(actionArea.goals).length === 0) {
+      forActionAreaDelete.push(actionAreaID)
+    }
+  }
+  for (const actionAreaID of forActionAreaDelete) {
+    delete actionAreas[actionAreaID]
   }
 }
 

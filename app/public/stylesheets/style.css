@@ -18,10 +18,15 @@ nav#action-areas-navbar {
 
 nav#action-areas-navbar a.navbar-brand {
   margin-right: 3rem;
+  font-size: 2rem;
 }
 
 .navbar-dark .navbar-nav .nav-link.active {
   color: black;
+}
+
+.nav-tabs .nav-link {
+  border: 1px solid grey;
 }
 
 h1#aa-title {
@@ -36,8 +41,20 @@ li.aa-goals-item {
   margin-bottom: 0.5rem;
 }
 
+div.goals-container {
+  background-color: #003366;
+}
+
+div.goals-container h2 {
+  color: white;
+}
+
 div.objectives-container {
   background-color: #f3e389;
+}
+
+div.objectives-container h2 {
+  color: black;
 }
 
 div.summary-item {

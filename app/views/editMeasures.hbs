@@ -32,6 +32,7 @@
     <div class="container-fluid shadow p-3 mb-5 bg-light rounded">
       <div class="mb-3">
         <label for="whatdata" class="form-label col-auto">What data will be collected:</label>
+        <br><small id="previousWhatdata">Previously - "{{objectiveData.what_data_will_be_collected}}"</small>
         <div class="row">
           <div class="col-10">
             <textarea type="input-group-text" style="height:100px;" class="form-control" id="whatdata" name="whatdata" placeholder="{{ objectiveData.what_data_will_be_collected }}"></textarea>
@@ -40,6 +41,7 @@
       </div>
       <div class="mb-3">
         <label for="howoften" class="form-label col-auto">How often is this assessment done:</label>
+        <br><small id="previousHowoften">Previously - "{{objectiveData.how_often_assessed}}"</small>
         <div class="row">
           <div class="col-10">
             <textarea type="input-group-text" style="height:100px;" class="form-control" id="howoften" name="howoften" placeholder="{{ objectiveData.how_often_assessed }}"></textarea>
@@ -48,12 +50,23 @@
       </div>
       <div class="mb-3">
         <label for="benchmark" class="form-label col-auto">What is the acceptable benchmark:</label>
+        <br><small id="previousBenchmark">Previously - "{{objectiveData.acceptable_benchmark}}"</small>
         <div class="row">
           <div class="col-10">
             <textarea type="input-group-text" style="height:100px;" class="form-control" id="benchmark" name="benchmark" placeholder="{{ objectiveData.acceptable_benchmark }}"></textarea>
           </div>
         </div>
       </div>
+      <div class="mb-3">
+        <label for="documents" class="form-label col-auto">Please add a description of and a link to assessment documents (saved on Sharepoint):</label>
+        <br><small id="previousDocuments">Previously - "{{objectiveData.assessment_documents}}"</small>
+        <div class="row">
+          <div class="col-10">
+            <textarea type="input-group-text" style="height:100px;" class="form-control" id="documents" name="documents" placeholder="{{ objectiveData.assessment_documents }}"></textarea>
+          </div>
+        </div>
+      </div>
+
 
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>

@@ -75,6 +75,10 @@ hbs.registerHelper('notincludes', function (needle, haystack) {
   return !isMatch
 })
 
+hbs.registerHelper('plusOne', function (num) {
+  return (parseInt(num) + 1).toString()
+})
+
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

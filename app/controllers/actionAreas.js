@@ -53,6 +53,7 @@ async function getActionAreas (next) {
   const actionAreas = {}
   // add each action_area
   const aaResults = await actionAreasQueries.getActionAreas(next).catch(next)
+  aaResults.sort((a, b) => a.rank - b.rank)
   for (const item of aaResults) {
     actionAreas[item.id] = item
   }

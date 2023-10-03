@@ -9,7 +9,7 @@ Note:  these display term updates were requested & implemented in 2023.  The cod
 ### push to production
 
 ```
-docker build --no-cache --platform linux/x86_64/v8 -t libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express .
+docker build --no-cache --platform linux/amd64 -t libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express .
 docker push libapps-admin.uncw.edu:8000/randall-dev/strategic-plan-express 
 ```
 

@@ -34,7 +34,7 @@
       {{!-- Status selector --}}
       <div class="mb-3">
         <label for="status" class="form-label col-auto">Status:</label>
-        <br><small id="previousStatus">Previously - {{objectiveData.status}}</small>
+        <br><small id="previousStatus">Previously - {{#noneorvalue objectiveData.status}}{{/noneorvalue}}</small>
         <select class="form-select" aria-label="objectiveStatus" id="status" name="status">
         {{! set previously value as the default selector choice}}
         {{#each statusChoices as |statusChoice|}}
@@ -54,7 +54,7 @@
       {{!-- Year selector --}}
       <div class="mb-3">
         <label for="year" class="form-label col-auto">Target Academic Year:</label>
-        <br><small id="previousYear">Previously - {{objectiveData.target_academic_year}}</small>
+        <br><small id="previousYear">Previously - {{#noneorvalue objectiveData.target_academic_year}}{{/noneorvalue}}</small>
         <select class="form-select" aria-label="objectiveYear" id="year" name="year">
         {{! set previously value as the default selector choice}}
         {{#each yearChoices as |yearChoice|}}
@@ -74,7 +74,7 @@
       {{!-- Leads selector --}}
       <div class="mb-3">
         <label for="leads" class="form-label col-auto">Leads:</label>
-        <br><small id="previousLeads">Previously - {{objectiveData.leads}}</small>
+        <br><small id="previousLeads">Previously - {{#noneorvalue objectiveData.leads}}{{/noneorvalue}}</small>
         <select multiple class="form-select" aria-label="objectiveLeads" id="leads" name="leads" size="6">
         {{! make previous selection the default selected choice}}
         {{#each userChoices as |userChoice|}}
@@ -94,7 +94,7 @@
       {{!-- Members selector --}}
       <div class="mb-3">
         <label for="members" class="form-label col-auto">Members:</label>
-        <br><small id="previousMembers">Previously - {{objectiveData.project_members}}</small>
+        <br><small id="previousMembers">Previously - {{#noneorvalue objectiveData.project_members}}{{/noneorvalue}}</small>
         <select multiple class="form-select" aria-label="objectiveMembers" id="members" name="members" size="6">
         {{! make previous selection the default selected choice}}
         {{#each userChoices as |userChoice|}}

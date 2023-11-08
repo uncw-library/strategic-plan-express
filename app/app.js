@@ -57,6 +57,13 @@ hbs.registerHelper('notequal', function (arg1, arg2) {
   return (arg1 !== arg2)
 })
 
+hbs.registerHelper('noneorvalue', function (arg1) {
+  if (!arg1) {
+    return 'None'
+  }
+  return arg1
+})
+
 hbs.registerHelper('includes', function (needle, haystack) {
   // haystack is like "name1,name2,name3"
   if (!needle || !haystack) {
